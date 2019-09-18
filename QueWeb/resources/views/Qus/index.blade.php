@@ -516,7 +516,7 @@
                     }
                     str_choice += "                                                    <div style=\"padding-left: 5%;padding-top: 10%;\">\n" +
                         "\n" +
-                        "                                                            <p  id = \""+choiceid+"\" >添加选项</p>\n" +
+                        "                                                            <p style='color: royalblue' id = \""+choiceid+"\" >添加选项</p>\n" +
                         "\n" +
                         "                                                    </div>\n";
                     $("#"+target).html(str_choice);
