@@ -162,7 +162,7 @@
             </div>
         </div>
         <div class="edit-center" pid="5d7e238192beb543b9d5984b" p-type="None">
-            <a permission-type="edit" href="{{url("questionlist")}}">
+            <a  href="{{url("/questionlist")}}">
                 <div class="edit-center-title">
                     <div id="edit-header-edit" >问卷列表</div>
                 </div>
@@ -173,12 +173,12 @@
                     <div id="edit-header-publish" class="showUnderLine">发布项目</div>
                 </div>
             </a>
-            <div class="header-edit-icon arrow-left"></div>
+            {{--<div class="header-edit-icon arrow-left"></div>
             <a permission-type="report" href="/report/basic_chart/5d7e238192beb543b9d5984b?pid=5d7e238192beb543b9d5984b">
                 <div class="edit-center-title">
                     <div id="edit-header-report">统计报表</div>
                 </div>
-            </a>
+            </a>--}}
         </div>
     </div>
 </div>
@@ -357,9 +357,10 @@
                         "                                <div class=\"q_content\">\n" +
                         "                                    <div class=\"q_title_wrap\">\n" +
                         "                                        <div class=\"q_seq\">"+ seq +  "</div>\n" +
-                        "                                        <div >\n" +
-                        "                                            <input id=\" "  + tag+"-"+id +   "  \" class=\"q_title \" edit-type=\"question\" tabindex=\"0\" style=\"border: 0px; width: 150%;\" value=\"   "+ content + "    \">\n" +
-                        "                                        </div>\n" +
+                        "                                        <div style='display: inline'>\n" +
+                        "                                            <input  id=\" "  + tag+"-"+id +   "  \" class=\"q_title \" edit-type=\"question\" tabindex=\"0\" style=\"border: 0px; width: 75%; float: left; \" value=\"   "+ content + "    \"> " +
+                        "                                           <span style='float: right'> 删除</spam> \n" +
+                        "                                        </div><br><br>\n" +
                         "                                    </div>\n" +
                         "\n" +
                         "                                    <!-- 输入框 -->\n" +
@@ -383,7 +384,7 @@
                         "                                          <div class=\"q_title_wrap\">\n" +
                         "                                              <div class=\"q_seq\">"+ seq + type +"</div>\n" +
                         "                                              <div >\n" +
-                        "                                                  <input id=\" "+ tag+"-"+id+ "  \" class=\"q_title \" style=\"border: 0px; width: 100%;\" value=\"  "+ content+ " \">\n" +
+                        "                                                  <input id=\" "+ tag+"-"+id+ "  \" class=\"q_title \" style=\"border: 0px; width: 75%;\" value=\"  "+ content+ " \">  <span style='float: right'> 删除</spam>  \n" +
                         "                                              </div>\n" +
                         "                                          </div>\n" +
                         "                                             <!-- 选项框 -->\n" +
@@ -503,14 +504,12 @@
                             "\t\t\t\t</span>\n" +
                             "\t\t\t\t<div>\n" +
                             "\t\t\t\t\t<i class=\"icon_wj icon_radio\"></i>\n" +
-                            "\t\t\t\t\t<input id='xuanxiang-" + data[j].id + " ' class=\"option_title\" edit-type=\"option\" style=\"border: 0px;\"  value=\" " + content + " \">\n" +
+                            "\t\t\t\t\t<input id='xuanxiang-" + data[j].id + " ' class=\"option_title\" edit-type=\"option\" style=\"border: 0px;\"  value=\" " + content + " \"> \n" +
+
                             "\t\t\t\t\t\n" +
+
+                            "\t\t\t\t\t<span>删除</span> \n" +
                             "\t\t\t\t</div>\n" +
-                            "\t\t\t\t<div class=\"option_operate\">\n" +
-                            "\t\t\t\t\t\n" +
-                            "\t\t\t\t\t<a class=\"icon_wj btn_icon btn_option_del show_title\" data-title=\"删除\"></a>\n" +
-                            "\t\t\t\t</div>\n" +
-                            "\t\t\t</div>\n" +
                             "\t\t</li>"
 
                     }
@@ -525,8 +524,6 @@
                 });
 
         }
-
-
 
             $("body").delegate("p","click", function () {
                 var _this = this;

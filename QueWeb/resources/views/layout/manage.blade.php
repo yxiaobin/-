@@ -39,23 +39,35 @@
                         <div class="title">控制台首页</div>
                     </a>
                 </li>
-                {{--菜单管理--}}
+                {{--问卷管理--}}
                 <li class="dropdown">
                     <a href="#">
                         <div class="icon">
                             <i class="fa fa-sliders" aria-hidden="true"></i>
                         </div>
-                        <div class="title">主页管理</div>
+                        <div class="title">问卷管理</div>
+                    </a>
+                    <div class="dropdown-menu">
+                        <ul>
+                            <li><a href="#">问卷列表</a></li>
+                            <li><a href="#">问卷审核</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {{--用户管理--}}
+                <li class="dropdown">
+                    <a href="#">
+                        <div class="icon">
+                            <i class="fa fa-sliders" aria-hidden="true"></i>
+                        </div>
+                        <div class="title">用户管理</div>
                     </a>
                     <div class="dropdown-menu">
                         <ul>
                             <li><a href="#">幻灯片管理</a></li>
-
-
                         </ul>
                     </div>
                 </li>
-
 
             </ul>
         </div>

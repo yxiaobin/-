@@ -185,12 +185,7 @@
                     <div id="edit-header-publish">发布项目</div>
                 </div>
             </a>
-            <div class="header-edit-icon arrow-left"></div>
-            <a permission-type="report" href="/report/basic_chart/5d7e238192beb543b9d5984b?pid=5d7e238192beb543b9d5984b">
-                <div class="edit-center-title">
-                    <div id="edit-header-report">统计报表</div>
-                </div>
-            </a>
+
         </div>
     </div>
 </div>
