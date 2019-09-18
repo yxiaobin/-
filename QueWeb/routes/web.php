@@ -32,7 +32,8 @@ Route::post('update_test','BuildQesController@update_test');
 Route::post('insert_choice','BuildQesController@insert_choice');
 //post 查询选项表
 Route::post('search_choice','BuildQesController@search_choice');
-
+//post 修改选项表
+Route::post('update_choice','BuildQesController@update_choice');
 
 
 //管理员后台页面

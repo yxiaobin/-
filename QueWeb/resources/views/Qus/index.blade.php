@@ -425,7 +425,13 @@
                        //发送数据信息
                        var kind = $(_this).attr('id').split('-')[0];
                        var id = $(_this).attr('id').split('-')[1];
-                       var uri = "/WorkOnline/QueWeb/public/update_test";
+                       var uri="";
+                       if(kind !="xuanxiang"){
+                            uri = "/WorkOnline/QueWeb/public/update_test";
+                       }else{
+                            uri = "/WorkOnline/QueWeb/public/update_choice";
+                       }
+                        //console.log(uri);
                        var val = $(_this).val();
                        $.post(uri,
                            {
@@ -435,7 +441,7 @@
                                _token: '{{csrf_token()}}'
                            },
                            function (data) {
-                               console.log(data);
+                              // console.log(data);
                            });
                    }
                }, 0)
@@ -445,7 +451,7 @@
                var _this = this;
                flag1 = 1;
                _this.style.border = "1px solid";
-               console.log("huodejiaodian");
+              // console.log("huodejiaodian");
            })
            $('input').blur(function () {
                var _this = this;
@@ -492,7 +498,7 @@
                             "\t\t\t\t</span>\n" +
                             "\t\t\t\t<div>\n" +
                             "\t\t\t\t\t<i class=\"icon_wj icon_radio\"></i>\n" +
-                            "\t\t\t\t\t<input class=\"option_title\" edit-type=\"option\" style=\"border: 0px;\"  value=\" " + content + seq+ " \">\n" +
+                            "\t\t\t\t\t<input id='xuanxiang-" + data[j].id + " ' class=\"option_title\" edit-type=\"option\" style=\"border: 0px;\"  value=\" " + content + " \">\n" +
                             "\t\t\t\t\t\n" +
                             "\t\t\t\t</div>\n" +
                             "\t\t\t\t<div class=\"option_operate\">\n" +
@@ -529,7 +535,7 @@
                             _token: '{{csrf_token()}}'
                         },
                         function (data) {
-                            console.log("xuanxiangbiao:" + data);
+                            //console.log("xuanxiangbiao:" + data);
                             addChoice(id);
                         });
                 }
@@ -551,7 +557,7 @@
                             _token:'{{csrf_token()}}'
                         },
                         function (data) {
-                            console.log(data);
+                            //.log(data);
                         });
         })
     </script>
@@ -567,7 +573,7 @@
                     _token:'{{csrf_token()}}'
                 },
                 function (data) {
-                    console.log(data);
+                    //console.log(data);
                 });
 
         })
@@ -583,7 +589,7 @@
                     _token:'{{csrf_token()}}'
                 },
                 function (data) {
-                    console.log(data);
+                    //console.log(data);
                 });
         })
     </script>

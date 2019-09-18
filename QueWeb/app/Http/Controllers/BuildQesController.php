@@ -86,5 +86,12 @@ class BuildQesController extends Controller
         }
         return $choices;
     }
-
+    //修改选项表
+    public  function  update_choice(Request $request)
+    {
+        $test = Choice::find($request->id);
+        $test->content = $request->content;
+        $test->save();
+        return $test;
+    }
 }
