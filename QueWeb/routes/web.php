@@ -28,6 +28,9 @@ Route::post('insert_test','BuildQesController@insert_test');
 Route::post('search_test','BuildQesController@search_test');
 //post 修改test表
 Route::post('update_test','BuildQesController@update_test');
+//修改问卷表标题
+Route::post('update_question_title','BuildQesController@update_question_title');
+
 //post 添加选项表
 Route::post('insert_choice','BuildQesController@insert_choice');
 //post 查询选项表

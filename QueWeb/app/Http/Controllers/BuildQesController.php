@@ -19,8 +19,9 @@ class BuildQesController extends Controller
             $question->startTime = now();
             $question->endTime = 999999999;
             $question->status = 0;
+            $question->title = "问卷名称";
             $question->save();
-            session(['questionnaireId'=>$question->id]);
+            session(['questionnaireId'=>$question->id,"title"=>$question->title]);
         }
         return view ("Qus.index");
     }
@@ -93,5 +94,13 @@ class BuildQesController extends Controller
         $test->content = $request->content;
         $test->save();
         return $test;
+    }
+    //修改问卷表标题
+    public function update_question_title(Request $request)
+    {
+        $obj = Questionnaire::find(session("questionnaireId"));
+        $obj->title = $request->content;
+        $obj->save();
+        return $obj->title;
     }
 }

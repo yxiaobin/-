@@ -217,18 +217,18 @@
             <div class="question-type-box">
                 <div class="question_type_dl">
                     <dl class="type_module">
-                        <dt>选择题</dt>
+                        <dt>题目类型</dt>
                         <dd>
-                            <label id="danxuan" class="type_item three_letter_spacing  ui-draggable ui-draggable-handle" question-type="2" disp-type="" question-name="single_select">
+                                <label id="danxuan" class="type_item three_letter_spacing  ui-draggable ui-draggable-handle" question-type="2" disp-type="" question-name="single_select">
                                 <i  class="icon_wj icon_type_single"></i>
                                 单选题
-						</label>
-                            <label  id="duoxuan" class="type_item three_letter_spacing  ui-draggable ui-draggable-handle" question-type="3" disp-type="" question-name="multiple_select">
+						        </label>
+                                <label  id="duoxuan" class="type_item three_letter_spacing  ui-draggable ui-draggable-handle" question-type="3" disp-type="" question-name="multiple_select">
                                 <i class="icon_wj icon_type_multiple"></i>
                                 多选题
-						</label>
+						        </label>
                         </dd>
-                        <dt>填空题</dt>
+
                         <dd>
                             <label id="tiankong" class="type_item three_letter_spacing  ui-draggable ui-draggable-handle" question-type="2" disp-type="" question-name="single_select">
                                 <i  class="icon_wj icon_type_single"></i>
@@ -239,8 +239,8 @@
                     </dl>
                 </div>
                 <div id="preview_img_btn">
-                    <span>题型预览</span>
-                    <label class="btn_switch checked" data-key="question_preview" data-value="on"></label>
+                    <span>选择你所需要的题目类型</span>
+                    {{--<label class="btn_switch checked" data-key="question_preview" data-value="on"></label>--}}
                 </div>
             </div>
             </div></div>
@@ -254,14 +254,14 @@
         <div class="survey_main ">
             <div class="survey_prefix_wrap">
                 <div class="survey_title">
-                    <div class="content_editable">
-                        <div class="title_content" edit-type="project" contenteditable="true" tabindex="0"><p style="text-align: left;">问卷标题</p>
-                        </div>
+                    <div >
+                        <input id = "setTitle-001"class="title_content"style="border: 0px;" value="{{session("title")}}">
+                        </input>
                     </div>
                 </div>
                 <div class="survey_prefix">
-                    <div class="content_editable">
-                        <div class="prefix_content" edit-type="begin_desc" contenteditable="true" tabindex="0"
+                    <div >
+                        <div class="prefix_content" edit-type="begin_desc" contenteditable="false" tabindex="0"
             placeholder="点击编辑欢迎语">感谢您能抽出几分钟时间来参加本次答题，现在我们就马上开始吧！</div>
                     </div>
                 </div>
@@ -426,12 +426,13 @@
                        var kind = $(_this).attr('id').split('-')[0];
                        var id = $(_this).attr('id').split('-')[1];
                        var uri="";
-                       if(kind !="xuanxiang"){
-                            uri = "/WorkOnline/QueWeb/public/update_test";
+                       if(kind =="xuanxiang"){
+                           uri = "/WorkOnline/QueWeb/public/update_choice";
+                       }else if(kind =="setTitle") {
+                           uri = "/WorkOnline/QueWeb/public/update_question_title";
                        }else{
-                            uri = "/WorkOnline/QueWeb/public/update_choice";
+                           uri = "/WorkOnline/QueWeb/public/update_test";
                        }
-                        //console.log(uri);
                        var val = $(_this).val();
                        $.post(uri,
                            {
@@ -441,7 +442,11 @@
                                _token: '{{csrf_token()}}'
                            },
                            function (data) {
-                              // console.log(data);
+                              if(kind =="setTitle")
+                              {
+                                 console.log(data);
+                                  $("#setTitle-001").val(data);
+                              }
                            });
                    }
                }, 0)
