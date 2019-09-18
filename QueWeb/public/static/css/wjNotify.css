@@ -1,0 +1,16 @@
+.notifyCenterXY {
+    background: #2d3447;
+    border-radius: 2px;
+    padding: 15px 48px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.43;
+    position: fixed;
+    top: 40%;
+    z-index: 99999;
+    left: 50%;
+    opacity: 0.8;
+    box-shadow: none;
+    margin-left: -72px;
+}

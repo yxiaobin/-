@@ -1,0 +1,341 @@
+
+.preview_pop_shadow {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.1);
+    left: 0;
+    /* top: 0; */
+    right: 0;
+    /* bottom: 0; */
+    z-index: 999;
+    /* display: none; */
+    visibility:hidden;
+    transition:all 0.2s;
+}
+.preview_pop_shadow.is_scroll{
+    overflow: auto;
+}
+.pc_opacity{
+    opacity: 0.1;
+}
+.preview_inner_pop {
+    position: fixed;
+    background: #f5f5f5;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index:-1;
+    opacity: 0.97;
+    height: 100%;
+}
+
+.preview_inner_pop_i {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 11px;
+    background: url(/static/images/icon_edit_tools.png) no-repeat;
+    background-position: -360px -168px;
+    background-size: 520px auto;
+}
+
+.preview_inner_title {
+    height: 50px;
+    vertical-align: bottom;
+    position: absolute;
+    background: #efefef;
+    width: 100%;
+    z-index:99;
+}
+
+.display_inner_block {
+    display: inline-block;
+}
+
+.preview_inner_title_left_font {
+    font-size: 12px;
+    color: #484848;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.preview_inner_title_font {
+    font-size: 14px;
+    color: #AAAAAA;
+}
+
+.position_left {
+    position: absolute;
+    left: 36px;
+    top: 50%;
+    padding: 2px 5px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.position_left:hover{
+    background: #FFFFFF;
+    border-radius: 2px;
+}
+.position_center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.position_right {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.release_share_margin {
+    margin: 0;
+}
+.preview_inner_content{
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.preview_inner_content_wrap {
+    min-width: 100%;
+    padding: 0;
+}
+
+.pop_phone iframe {
+    width: 242px;
+    height: 410px;
+    margin: 55px 0 0 10px;
+}
+
+.pop_phone {
+    position: relative;
+    margin-top: 10px;
+    display: inline-block;
+    width: 274px;
+    height: 542px;
+    background-image: url(/static/images/Exterior_style/appearset_v3/appearset_bgc_big.png);
+    background-size: 274px 542px;
+}
+
+.nav_bar_top {
+    margin-top: 70px;
+}
+
+.computer_style {
+    width: 100%;
+    height: 872px;
+    /*overflow-y: scroll;*/
+    position: relative;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+
+
+.pop_phone_right {
+    background: #FFFFFF;
+    box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    width: 134px;
+    position: absolute;
+    top: 75px;
+    right: -145px;
+}
+
+.qcode_style {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    background: url(/static/images/icon_edit_tools.png) no-repeat;
+    background-position: -360px -72px;
+    background-size: 520px auto;
+}
+
+.qcode_font_style {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #484848;
+    vertical-align: middle;
+}
+
+.qcode_font_remind {
+    font-size: 12px;
+    color: #707070;
+    line-height: 12px;
+    margin: 12px 0 20px 0;
+}
+
+.pop_phone_margin {
+    margin-top: 18px;
+    margin-bottom: 17px;
+}
+
+.big_qcode_div>img {
+    display:block;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.theme_show_wrap .navbar {
+    text-align: center;
+    font-size: 0;
+}
+
+.theme_show_wrap {
+    box-sizing: border-box;
+    min-width: 1100px;
+}
+
+.theme_show_wrap .navbar {
+    text-align: center;
+    font-size: 0;
+}
+
+.theme_show_wrap .navbar .icon_wj {
+    display: inline-block;
+    width: 74px;
+    height: 39px;
+    line-height: 39px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    font-size: 12px;
+    color:#aaa;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.theme_show_wrap .navbar .icon_wj:first-child{
+    border-right: 1px solid #EAEAEA;
+}
+.theme_show_wrap .navbar .icon_wj i {
+    display: inline-block;
+    background-image: url(/static/images/icon_edit_tools.png) !important;
+    background-size: 520px auto;
+    vertical-align: middle;
+    margin-right:6px;
+}
+
+.theme_show_wrap .navbar .icon_wj i.icon_mobile {
+    width: 14px;
+    height: 19px;
+    background-position: -293px -171px;
+}
+
+.theme_show_wrap .navbar .icon_wj i.icon_computer {
+    width: 20px;
+    height: 18px;
+    background-position: -244px -171px;
+}
+
+.theme_show_wrap .navbar .icon_wj.active {
+    color: #2672ff;
+}
+
+.theme_show_wrap .navbar .icon_wj.active i.icon_mobile {
+    background-position: -269px -171px;
+}
+
+.theme_show_wrap .navbar .icon_wj.active i.icon_computer {
+    background-position: -220px -171px;
+}
+.theme_show_wrap .preview_iframe {
+    text-align: center;
+}
+
+.theme_show_wrap .preview_iframe .phone {
+    position: relative;
+    margin-top: 10px;
+    display: inline-block;
+    width: 372px;
+    height: 744px;
+    background-image: url(/static/images/Exterior_style/appearset_v3/appearset_bgc_big.png);
+    background-size: 372px 744px;
+}
+.preview_iframe .phone iframe[name="PhoneSurvey"] {
+    width: 318px;
+    height: 568px;
+    margin: 74px 0 0 0px;
+}
+
+.preview_iframe .computer iframe[name="PcSurvey"] {
+    min-width: 1100px;
+    min-height: 400px;
+    margin: 0px;
+}
+.computer_iframe {
+    /* width:960px; */
+    width: 100%;
+    min-height: 400px;
+    margin: 0px;
+    height: 100%;
+}
+.hide{
+    display: none !important;
+}
+body.overflow{
+    overflow: hidden;
+}
+.split_line{
+    display:inline-block;
+    border-right: 1px solid #EAEAEA;
+    float: right;
+    height: 12px;
+    margin-top: 6px;
+}
+
+/* 1780絮鎶� */
+@media screen and (max-width: 1780px) {
+    .preview_iframe .computer iframe[name="PcSurvey"] {
+        min-width: 679px;
+    }
+    .appear_setting[data-type="PC"]{
+        min-width: 1356px;
+    }
+}
+/* 1366絮鎶� */
+@media screen and (max-width: 1366px) {
+    .appear_setting[data-type="PC"]{
+        min-width: 1204px;
+    }
+}
+/* 1280絮鎶� */
+@media screen and (max-width: 1280px) {
+    .preview_iframe .computer iframe[name="PcSurvey"] {
+        min-width: 490px;
+    }
+    .appear_setting[data-type="PC"]{
+        min-width: 1014px;
+    }
+    .theme_show_wrap .preview_iframe .phone {
+        position: relative;
+        margin-top: 10px;
+        display: inline-block;
+        width: 274px;
+        height: 542px;
+        background-image: url(/static/images/Exterior_style/appearset_v3/appearset_bgc.png);
+        background-size: 274px 542px;
+    }
+
+    .preview_iframe .phone iframe[name="PhoneSurvey"] {
+        width: 220px;
+        height: 393px;
+        margin: 74px 0 0 0px;
+    }
+}
+/* 1024絮鎶� */
+@media screen and (max-width: 1024px) {
+    .preview_iframe .computer iframe[name="PcSurvey"] {
+        min-width: 490px;
+    }
+    .appear_setting[data-type="PC"]{
+        min-width: 1014px;
+    }
+}
+.question.cloze .w-select .w-select-input .w-select-num{
+    display:inline-block;
+}

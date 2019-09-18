@@ -1,0 +1,169 @@
+.popup_box {
+    opacity: 0;
+    position: fixed;
+    top: -100%;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+}
+
+.popup_mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    opacity: 0;
+    filter: Alpha(opacity=0);
+}
+
+.popup_mask_show {
+    filter: Alpha(opacity=30);
+    opacity: 0.3;
+}
+
+.popup_wrap {
+    position: absolute;
+    z-index: 9;
+    max-height: 614px;
+    max-width: 900px;
+    min-width: 500px;
+    border-collapse: collapse;
+    border-radius: 4px;
+    box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    line-height: 1.5;
+}
+.confirm_popup_box.popup_wrap {
+    max-height: 500px;
+    min-height: 220px;
+    max-width: 600px;
+    min-width: 420px;
+}
+
+/* .popup_wrap>div {
+    padding: 18px 18px 30px 18px;
+} */
+
+.popup_header {
+    color: #484848;
+    font-size: 16px;
+    line-height: 1;
+    text-align: left;
+    padding: 18px 30px;
+    border-bottom: 1px solid #D8D8D8;
+}
+.confirm_popup_box .popup_header {
+    border-bottom: none;
+    padding: 0px 30px 10px;
+    margin-top: 30px;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.has_close .popup_header{
+    padding-right: 39px;
+}
+
+.popup_content {
+    /* min-height: 200px; */
+    font-size: 14px;
+    text-align: left;
+    color: #707070;
+    word-wrap: break-word;
+    padding: 18px 30px;
+    box-sizing: border-box;
+    border-bottom: 1px solid  #D8D8D8;
+    line-height: 1.5;
+}
+.confirm_popup_box .popup_content {
+    min-height: 74px;
+    max-height: 354px;
+    padding: 0px 30px;
+    border-bottom: none;
+}
+
+.popup_btnwrap {
+    padding: 18px 30px;
+    font-size: 0;
+}
+.confirm_popup_box .popup_btnwrap {
+    border-top: none;
+    padding: 24px 30px 30px;
+}
+
+.popup_btn_align_right {
+    text-align: right;
+}
+
+.popup_btn_align_center {
+    text-align: center;
+}
+
+.popup_btn_align_left {
+    text-align: left;
+}
+
+.popup_btn_item {
+    display: inline-block;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    height: 28px;
+    line-height: 28px;
+    width: 82px;
+    border: solid 1px #D8D8D8;
+    background-color: #ffffff;
+    color: #484848;
+}
+
+.popup_btn_right {
+    margin-left: 10px;
+    border-color: #2672ff;
+    background-color: #2672ff;
+    color: #fff;
+}
+
+.popup_close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 9;
+    width: 18px;
+    height: 18px;
+    background: url(/static/images/popup_close.png?v=20190114) no-repeat;
+    background-size: 36px auto;
+    background-position: left top;
+    cursor: pointer;
+}
+.popup_close:hover {
+    background-position: right top;
+}
+.popup_remindWrap {
+    font-size: 12px;
+    color: #707070;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+}
+.popup_remindWrap .icon_check_title {
+    display: inline-block;
+}
+.popup_remindWrap .icon_check_box {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    background: url(/static/images/icon_tools.png?v=20190114) no-repeat;
+    cursor: pointer;
+    background-size: 808px auto;
+    background-position: -168px -810px;
+}
+.popup_remindWrap .icon_check_box.active {
+    background-position: -232px -810px;
+}

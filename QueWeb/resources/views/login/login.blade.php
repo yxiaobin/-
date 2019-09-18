@@ -41,7 +41,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="#" method="post">
+                        <form action="{{url("/login")}}" method="post">
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon1">
                                 <i class="fa fa-user" aria-hidden="true"></i></span>

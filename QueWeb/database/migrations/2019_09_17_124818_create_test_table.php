@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateTestTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('test', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('iphone')->unique();
-            $table->string('password');
-            $table->string('admin')->default(0);
-            $table->timestamps();
+            $table->string("questionnaireId");//哪一个调查表中的题目
+            $table->string("seq");//调查表中的第几个题目
+            $table->string("type");//类型
+            $table->string("content");//调查问题的题目
+
         });
     }
 
@@ -30,6 +30,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('test');
     }
 }

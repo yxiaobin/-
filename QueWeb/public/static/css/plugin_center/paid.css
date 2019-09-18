@@ -1,0 +1,995 @@
+var pay_order_id; //璁㈠崟ID
+var seniorUser_order = {pay_order_id: "",pay_type: ""};
+var check_order_id_list = [];
+
+//鏀粯鏂规硶
+var payment_Method = {
+    orderConfirm: function(options) {
+        var settings = {
+            title: '鏀粯纭',
+            buyNum: '',
+            payMoney: '',
+            btnOKFn: '',
+            btnCancelFn: '',
+            marginLeft: 256
+        };
+        $.extend(settings, options);
+
+        var htmlStr = '<div class="paid_mark"><div class="show_smallWrap" style="width:510px;margin-left:-' + settings.marginLeft + 'px;margin-top:-100px;"><div class="head_title"><p>' + settings.title + '</p><i class="small_close"></i></div><div class="small_wrap" style="width:auto;"><div class="small_content"><p class="default_p1">璐﹀彿浣欓涓猴細<span class="num_Warning">' + Number(settings.leave_money).toFixed(2) + '鍏�</span>锛岀郴缁熷皢鎵ｉ櫎<span class="num_Warning">' + Number(settings.payMoney).toFixed(2) + '鍏�</span></p></div></div><div class="btn_wrap"><a class="btn_cancel WJButton newBtn" href="javascript:;">鍙栨秷</a><a class="btn_ok WJButton" href="javascript:;">纭畾</a></div></div></div>';
+        $('body').append(htmlStr);
+        var $mark = $('body').find('.paid_mark');
+        if (settings.btnOKFn) {
+            $mark.on('click', '.btn_ok', function() {
+                $(this).html('鎻愪氦涓�');
+                $(this).removeClass('WJButton');
+                $(this).addClass('newWJButton');
+                $mark.find(".btn_ok").removeClass("btn_ok");
+                settings.btnOKFn();
+            });
+        }
+        $mark.on('click', '.btn_cancel', function() {
+            if (settings.btnCancelFn == '') {
+                $mark.remove();
+            } else {
+                settings.btnCancelFn();
+            }
+        });
+        $mark.on('click', '.small_close', function() {
+            $mark.remove();
+        });
+    },
+    goPay: function(options) {
+        var settings = {
+            title: '鏀粯纭',
+            needPay: '',
+            btnOKFn: '',
+            btnCancelFn: '',
+            marginLeft: 256,
+            type: ''  // 璐拱鏉ユ簮
+        };
+        $.extend(settings, options);
+
+        var form_str = '<form name="onlinepay_form" id="onlinepay_form" action="/member/payredirect/" target="_blank" method="post"><input type="hidden" name="order_id" /><input type="hidden" name="_xsrf" /></form>';
+        var payment_ul_str = '<div class="mt10"><p class="default_p2">璇烽€夋嫨浠ヤ笅鏀粯鏂瑰紡锛�</p><ul class="payment_ul"><li class="payment_mode"><div class="zfb payment" name="alipay"></div></li><li class="payment_mode mleft10"><div class="wx payment" name="wechatpay"></div></li></ul></div>';
+
+        var htmlStr = '<div class="paid_mark"><div class="show_smallWrap" style="width:510px;margin-left:-' + settings.marginLeft + 'px; margin-top:-100px;"><div class="head_title"><p>' + settings.title + '</p><i class="small_close"></i></div><div class="small_wrap" style="width:auto;"><div class="small_content"><div><div class="plugin_choose_paid_type"><p class="default_p1">鎵ｉ櫎璐︽埛浣欓锛�<span class="num_Warning">' + Number(settings.leave_money).toFixed(2) + '鍏�</span>锛夊悗锛岄渶鏀粯<span class="num_Warning">' + Number(settings.needPay).toFixed(2) + '鍏�</span></p>' + payment_ul_str + form_str + '</div></div></div></div></div></div>';
+
+        $('body').append(htmlStr);
+        var $mark = $('body').find('.paid_mark');
+        if(settings.btnOKFn){
+            $mark.on('click','.payment_mode',function(){
+                var pay_channel = $(this).find(".payment").attr("name");
+                if (settings.type) {
+                    var settingsType = settings.type;
+                    if (settingsType == 'envelope') {
+                        settingsType = 'lucky_money';
+                    }
+                    if (pay_channel == 'alipay') {
+                        _hmt.push(['_trackEvent', 'pluginAliPay', 'click', settingsType +'_pluginAliPay']);
+                    }else{
+                        _hmt.push(['_trackEvent', 'pluginWxPay', 'click', settingsType +'_pluginWxPay']);
+                    }
+                }
+                var order_id = JSON.parse($.ajax({url:'/member/payorder/', type:'post', data: {'money':Number(settings.needPay).toFixed(2),'pay_channel':pay_channel,'_xsrf': getCookie('_xsrf')}, async:false}).responseText).order_id;
+                $("#onlinepay_form input[name='order_id']").val(order_id);
+                $("#onlinepay_form input[name='_xsrf']").val(getCookie('_xsrf'));
+                $("#onlinepay_form").submit();
+                pay_order_id = order_id;
+                if (settings.type == "seniorUser"){
+                    seniorUser_order.pay_order_id = order_id;
+                    seniorUser_order.pay_type = pay_channel;
+                }
+                settings.btnOKFn();
+            });
+        }
+        $mark.on('click', '.small_close', function() {
+            $(".paid_mark").remove();
+        });
+    },
+    payConfirm: function(options) {
+        var settings = {
+            title: '鏀粯鎴愬姛纭',
+            payStatus: true,
+            btnOKFn: '',
+            btnCancelFn: '',
+            marginLeft: 256
+        };
+        $.extend(settings, options);
+        if (options.pay_order_id){
+            pay_order_id = options.pay_order_id;
+        }
+
+        var contentHtml = '';
+        if (settings.payStatus) {
+            contentHtml = '<p class="p1">鏀粯瀹屾垚鍓嶏紝璇峰嬁鍏抽棴姝ょ獥鍙ｃ€�</p><p class="p1">鏀粯瀹屾垚鍚庯紝璇锋牴鎹敮浠樻儏鍐电偣鍑讳互涓嬫寜閽€�</p><div class="paid_wrap"><a class="paidFailure" href="javascript:;">閬囧埌闂</a><a class="paidSuccess" href="javascript:;" style="color:#53a4f4;">鏀粯鎴愬姛</a></div>';
+        } else {
+            contentHtml = '<p class="p1">鎮ㄦ湭瀹屾垚鏀粯銆�</p>';
+        }
+        var htmlStr = '<div class="paid_mark"><div class="show_smallWrap" style="width:510px;margin-left:-' + settings.marginLeft + 'px; margin-top:-100px;"><div class="head_title"><p>' + settings.title + '</p><i class="small_close"></i></div><div class="small_wrap" style="width:auto;"><div class="small_content"><div class="plugin_paid_confim">' + contentHtml + '</div></div></div></div></div>';
+        $('body').append(htmlStr);
+        var $mark = $('body').find('.paid_mark');
+        if (settings.btnOKFn) {
+            $mark.on('click', '.paidSuccess', function() {
+                $mark.find(".paidSuccess").removeClass("paidSuccess");
+                settings.btnOKFn();
+            });
+        }
+        if (settings.btnCancelFn) {
+            $mark.on('click', '.paidFailure', function() {
+                window.open("/about/zxzx/");
+                settings.btnCancelFn();
+            });
+        }
+        $mark.on('click', '.small_close', function() {
+            $(".paid_mark").remove();
+        });
+        var check_order_id = window.setInterval(check_order, 3000);
+        check_order_id_list.push(check_order_id);
+
+        function check_order() {
+            getOrderStatus(function(data) {
+                orderStatus = JSON.parse(data).order_status;
+                if (orderStatus == 1) {
+                    if (settings.btnOKFn){
+                        settings.btnOKFn();
+                        $.each(check_order_id_list, function(index) {
+                            window.clearInterval(check_order_id_list[index]);
+                        });
+                    }
+                }
+            });
+        }
+    },
+    markRemove: function() {
+        $('.paid_mark').remove();
+    }
+};
+
+//鍏呭€�
+var account_Recharge = {
+    save_account: function(){
+        window.location.href = '/member/mywallet';
+        return;
+    }
+};
+
+// 璐拱杩斿洖寮圭獥
+function submitComplete(type, status){
+    $(".paid_mark").remove();
+    if (type == "sms"){
+        type_name = "鐭俊";
+    }else if (type == "email"){
+        type_name = "閭欢";
+    }
+    var sub_settings = {
+        subImgurl:"/static/images/register/success_duigou.png",
+        sub1_txt: "鎮ㄥ凡缁忔垚鍔熻喘涔�"+type_name+"浣欓",
+        subBt_txt: "鏌ョ湅鎴戠殑"+type_name+"浣欓",
+        status: status || false // true/false
+    };
+
+    if (!sub_settings.status){
+        sub_settings.subImgurl = "/static/images/register/fail_duigou.png";
+        sub_settings.sub1_txt = "缃戠粶绻佸繖锛岃绋嶅悗鍐嶈瘯锛�";
+        sub_settings.subBt_txt = "鎴戠煡閬撲簡";
+    }
+
+    var confirm_str =
+        '<div class="dialog_seniorUser">' +
+            '<div class="show_submitC">' +
+                '<h2 class="atitle">鏀粯鎻愮ず</h2>'+
+                '<a class="aclose" href="javascript:;"></a>' +
+                '<div class="amain">' +
+                    '<img src="'+ sub_settings.subImgurl +'" alt="" />' +
+                    '<p class="sub1">'+ sub_settings.sub1_txt +'</p>' +
+                    '<a href="javascript:;" class="subYesBT mt20 WJButton margin_no status_' + sub_settings.status + '">' + sub_settings.subBt_txt +'</a>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+    $("body").append(confirm_str);
+
+    var $mark = $('body').find('.dialog_seniorUser');
+
+    $("body").on("click",".show_submitC .status_true",function(){
+        window.location.href = '/member/unifybuy/';
+    });
+    $("body").on("click",".show_submitC .status_false",function(){
+        $mark.remove();
+    });
+    $("body").on("click",".show_submitC .aclose",function(){
+        $mark.remove();
+    });
+}
+
+//璐拱鐭俊
+var sms_paid = {
+    validationNum: function(obj, isDisc) {
+        //娌℃湁绗簩涓弬鏁拌鏄庝笉鑳借緭鍏ョ偣
+        if (isDisc) {
+            obj.val(obj.val().replace(/[^\d.]/g, "")); //娓呴櫎鈥滄暟瀛椻€濆拰鈥�.鈥濅互澶栫殑瀛楃
+        } else {
+            if (obj.attr('id') == "contactInfo") {
+                obj.val(obj.val().replace(/[^\d-]/g, ""));
+            } else {
+                obj.val(obj.val().replace(/[^\d]/g, ""));
+            }
+        }
+        obj.val(obj.val().replace(/^\./g, "")); //楠岃瘉绗竴涓瓧绗︽槸鏁板瓧鑰屼笉鏄�.
+        obj.val(obj.val().replace(/\.{2,}/g, ".")); //鍙繚鐣欑涓€涓�. 娓呴櫎澶氫綑鐨�.
+        obj.val(obj.val().replace(".", "$#$").replace(/\./g, "").replace("$#$", "."));
+    },
+    buy_sms: function(buy_number) {
+        $.ajax({
+            url: '/member/buysms/',
+            type: 'post',
+            dataType: "JSON",
+            data: {
+                'number': buy_number,
+                '_xsrf': getCookie('_xsrf')
+            },
+            success: function(ret) {
+                if (ret.info != '') {
+                    loadMack({
+                        off: 'on',
+                        Limg: 1,
+                        text: ret.info,
+                        set: 1000
+                    });
+                } else {
+                    submitComplete('sms', true);
+                    return;
+                }
+            }
+        });
+    }
+
+};
+
+//璐拱閭欢
+var email_paid = {
+    validationNum: function(obj, isDisc) {
+        //娌℃湁绗簩涓弬鏁拌鏄庝笉鑳借緭鍏ョ偣
+        if (isDisc) {
+            obj.val(obj.val().replace(/[^\d.]/g, "")); //娓呴櫎鈥滄暟瀛椻€濆拰鈥�.鈥濅互澶栫殑瀛楃
+        } else {
+            if (obj.attr('id') == "contactInfo") {
+                obj.val(obj.val().replace(/[^\d-]/g, ""));
+            } else {
+                obj.val(obj.val().replace(/[^\d]/g, ""));
+            }
+        }
+        obj.val(obj.val().replace(/^\./g, "")); //楠岃瘉绗竴涓瓧绗︽槸鏁板瓧鑰屼笉鏄�.
+        obj.val(obj.val().replace(/\.{2,}/g, ".")); //鍙繚鐣欑涓€涓�. 娓呴櫎澶氫綑鐨�.
+        obj.val(obj.val().replace(".", "$#$").replace(/\./g, "").replace("$#$", "."));
+    },
+    buy_email: function(package_name) {
+        $.ajax({
+            url: '/collect/mail_quota/packages/',
+            type: 'post',
+            dataType: "JSON",
+            data: {
+                'package_name': package_name,
+                '_xsrf': getCookie('_xsrf')
+            },
+            success: function(ret) {
+                if (!ret.is_success) {
+                    loadMack({
+                        off: 'on',
+                        Limg: 1,
+                        text: ret.msg,
+                        set: 1000
+                    });
+                } else {
+                    submitComplete('email', true);
+                    return;
+                }
+            }
+        });
+    }
+
+};
+
+//鑱旂郴浜哄彂閫佺煭淇�
+var Contacts = {
+    send_sms: function() {
+        var url = '/contact/sms/consume_to_send_sms/';
+        var data = {
+            '_xsrf': getCookie('_xsrf')
+        };
+        var $oMark = new idyC.loading({
+            text: '鍙戦€佷腑'
+        });
+        $oMark.open();
+        idyC.ajaxPost(url, data, function(result) {
+            $oMark.remove();
+
+            var rsp_info = JSON.parse(result);
+            var rsp_status = rsp_info.status;
+
+            if (rsp_status == 'success') {
+                window.location.href = '/contact/sms/showSMSTip';
+                return;
+            }
+        });
+    },
+    send_sms_from_collect: function(){
+        var url = '/sms/collect/consumetosend/';
+        var data = {
+            pid: project_id,
+            '_xsrf': getCookie('_xsrf')
+        };
+        var $oMark = new idyC.loading({
+            text: '鍙戦€佷腑'
+        });
+        $oMark.open();
+        idyC.ajaxPost(url, data, function(result) {
+            $oMark.remove();
+
+            var rsp_info = JSON.parse(result);
+            var rsp_status = rsp_info.status;
+
+            if (rsp_status == 'success') {
+                window.location.href = '/collect/sendsms/' + project_id + '/';
+                return;
+            }
+        });
+    }
+};
+
+//棰樺瀷璐拱
+var question_paid = {
+    bay_question: function(options) {
+        $.ajax({
+            "url": "/plugin/ajax/consume/",
+            "type": "POST",
+            "dataType": "JSON",
+            "async": false,
+            "data": {
+                'plugin_id_list': options.calTypeList,
+                'discount_id': options.discount_id,
+                'month_count': options.month_count,
+                '_xsrf': getCookie('_xsrf')
+            },
+            success: function(data) {
+                if (!data.info) {
+                    var success_list = [];
+                    paidSuccessFun(data);
+                } else {
+                    loadMack({
+                        off: 'on',
+                        Limg: 1,
+                        text:data.info,
+                        set: 1000
+                    });
+                }
+                $('body').find('.paid_mark').remove();
+            }
+        });
+    }
+};
+
+//鏈夊伩鏀堕泦
+var paid_Collection = {
+    save_pconvert: function(pid, costInfo) {
+        $.ajax({
+            url: '/collect/paid/' + pid,
+            data: {
+                act: 'comfirm_order',
+                community_info_list: costInfo.community_info_list,
+                c_id: costInfo.zkqOid,
+                c_type: costInfo.c_type,
+                "_xsrf": getCookie('_xsrf')
+            },
+            dataType: "JSON",
+            type: "POST",
+            timeout: 15000,
+            success: function(ret) {
+                if (ret.status == "200") {
+                    if(ret.success == false){
+                        loadMack({
+                            off: 'on',
+                            Limg: 1,
+                            text: ret.msg,
+                            set: 1000
+                        });
+                    }else{
+                        $('.paid_mark').hide();
+                        $('.page_2').hide();
+                        $('.page_3').show();
+                        // 鏂扮増缂栬緫涓殑鏈夊伩鏀堕泦
+                        $('.third_page').hide();
+                        $('.four_page').show();
+                    }
+                    
+                } else {
+                    loadMack({
+                        off: 'on',
+                        Limg: 1,
+                        text: '缃戠粶绻佸繖锛岃绋嶅悗鍐嶈瘯锛�',
+                        set: 1000
+                    });
+                }
+            }
+        });
+
+        $('.page_3 span').click(function(){
+            window.location.href = '/collect/paid/' + pid;
+        })
+    }
+};
+
+//鏀粯璇锋眰
+function getOrderStatus(successCallback) {
+    $.ajax({
+        url: '/member/validatepayorder/',
+        type: 'post',
+        data: {
+            'order_id': pay_order_id,
+            '_xsrf': getCookie('_xsrf')
+        },
+        success: successCallback
+    });
+}
+
+//楂樼骇鐢ㄦ埛璐笌鎴栫画璐�
+var seniorUser = {
+    init: function(options) {
+        sessionStorage.senior_user_promo = false;
+        var seniorUser = {};
+        var timestamp = new Date().getTime();
+        var settings = {
+            max_month: 9,
+            buyTxt: '璐拱鏃堕暱',
+            expireTime: '',
+            month_count: 12,
+            discount: 1,
+            discount_id: '',
+            calTypeId: '',
+            c_type: '',
+        };
+        $.extend(settings, options);
+        var datas_info = JSON.parse($.ajax({
+                url: '/plugin/ajax/get_cal_type/?'+timestamp,
+                type: "POST",
+                data: {
+                    'plugin_id': 'super_account',
+                    '_xsrf': getCookie('_xsrf')
+                },
+                async: false
+            }).responseText);
+        var currency_info = JSON.parse($.ajax({
+                url: '/auth/ajax/get_currency_info/?'+timestamp,
+                type: "POST",
+                data: {
+                    'currency_type': '0|2|3',
+                    'scope': 'super_account',
+                    '_xsrf': getCookie('_xsrf')
+                },
+                async: false
+            }).responseText);
+        var super_account = JSON.parse($.ajax({
+                url: '/plugin/ajax/get_info_for_buy_super_account/?'+timestamp,
+                type: "POST",
+                data: {
+                    'month_count': settings.month_count,
+                    '_xsrf': getCookie('_xsrf')
+                },
+                async: false
+            }).responseText);
+        var annual_fee = new Object();    //骞磋垂
+        var monthly_fee = new Object();   //鏈堣垂
+        update_fee_type(datas_info.datas);
+        var buy_time_str = buy_time_info(settings.max_month, settings.buyTxt, super_account);
+        var discount_str = discount_info(currency_info);
+        var discount_select_money = '';
+        if (discount_str){
+            discount_select_money = '<tr><td><p class="mL24">浼樻儬鍒告姷鎵ｏ細</p></td><td class="aDeductible"><p class="mR24">-<span class="num">0.00</span>鍏�</p></td></tr>';
+        }
+        var $dialogApplication =
+            '<div class="dialog_seniorUser">' +
+                '<div class="show_dialog">' +
+                    '<h2 class="atitle">鏀粯纭</h2>'+
+                    '<a class="aclose" href="javascript:;"></a>' +
+                    '<div class="amain">' +
+                        buy_time_str +
+                        discount_str +
+                        '<div class="promo mt10">'+
+                            '<span class="mTitle"><label class="ckbox" ><span></span>浣跨敤浼樻儬鐮侊細</label></span>' +
+                            '<input class="promoNum" disabled=true type="text" />' +
+                            '<a class="promobt WJButton failureBt" href="javascript:;">纭畾</a>' +
+                            '<span class="num_Warning clues colBlur"></span>' +
+                        '</div>' +
+                        '<div class="aprice mt20">' +
+                            '<h2 class="bclose">璐圭敤缁熻锛�</h2>' +
+                            '<div class="aprice_info mt20"><table>' +
+                                '<tr><td><p class="mL24">楂樼骇鐗堣垂鐢細</p></td><td class="aConsumption"><p class="mR24"><span class="num">0.00</span>鍏�</p></td></tr>' +
+                                discount_select_money +
+                                '<tr><td><p class="mL24">浼樻儬鐮佹姷鎵ｏ細</p></td><td class="aPromo"><p class="mR24">-<span class="num">0.00</span>鍏�</p></td></tr>' +
+                                '<tr style="display:none"><td><p class="mL24">宸茶喘搴旂敤鎶垫墸锛�</p></td><td class="aDeductibleHis"><p class="mR24">-<span class="num">0.00</span>鍏�<i class="c_ht ah"></i></p></td></tr>' +
+                                '<tr class="last"><td><p class="mL24">璐︽埛浣欓鎵ｉ櫎锛�</p></td><td class="aBalance"><p class="mR24"><span>0.00</span>鍏�</p></td></tr>' +
+                                '<tr><td>杩橀渶鏀粯锛�</td><td class="num_Warning paymentV"><span>0</span>鍏�</td></tr>' +
+                            '</table></div>' +
+                        '</div>' +
+                        '<a href="javascript:;" class="success_bt mt20 WJButton margin_no">纭鏀粯</a>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        $('body').append($dialogApplication);
+
+        var $seniorUserBox = $(".dialog_seniorUser");
+        var $show_dialog = $seniorUserBox.find(".show_dialog");
+        var $buy_time_select = $seniorUserBox.find(".amain .buy_time_length select");
+        var $discount_paid_select = $seniorUserBox.find(".amain .discount_paid select");
+        var $aprice = $seniorUserBox.find(".aprice_info");
+        var $promo = $seniorUserBox.find('.promo');
+        var $clues = $seniorUserBox.find('.promo .clues');
+        var $promoNum = $promo.find('.promoNum');
+        var $promobt = $promo.find('.promobt');
+        var availableRmb = currency_info.rmb_data.value;
+
+        if (settings.month_count != 12){
+            $buy_time_select.find("option:first").attr("selected","selected");
+            settings.calTypeId = $buy_time_select.find('option:selected').attr("oid");
+        }
+
+        $seniorUserBox.on('click', '.aclose', function() {
+            $seniorUserBox.remove();
+        });
+
+        $seniorUserBox.on('click', '.mTitle .ckbox', function() {
+            $(this).toggleClass('active');
+            var activeDiv = $(this).parents('div');
+            if (activeDiv.hasClass('discount_paid')){
+                var activeSelect = activeDiv.find('select');
+                if ($(this).hasClass('active')){
+                    settings.discount = activeSelect.find('option:selected').val();
+                    settings.c_type = activeSelect.find('option:selected').attr("c_type");
+                    settings.discount_id = activeSelect.find('option:selected').attr("oid");
+                }else{
+                    settings.c_type = '';
+                }
+                init_discount(settings.month_count, availableRmb, settings.c_type, settings.discount);
+            }else if (activeDiv.hasClass('promo')){
+                if ($(this).hasClass('active')){
+                    $promoNum.attr('disabled',false);
+                    $promobt.removeClass('failureBt');
+                    $clues.show();
+                }else{
+                    $promoNum.val('').attr('disabled',true);
+                    $promobt.addClass('failureBt');
+                    $clues.text('').hide();
+                    sessionStorage.senior_user_promo = false;
+                    init_discount(settings.month_count, availableRmb, settings.c_type, settings.discount);
+                }
+            }
+        });
+
+        $promoNum.keyup(function(){
+            // var new_v = $(this).val().replace(/\D/g, "");
+            var new_v = $(this).val().trim();
+            $(this).val(new_v);
+        });
+
+        $seniorUserBox.on('click', '.promo .promobt', function() {
+            var promoNum = $(this).prev().val().strip();
+            if (!promoNum){
+                $clues.removeClass('colBlur').html('璇疯緭鍏ユ偍鐨勪紭鎯犵爜');
+                return false;
+            }
+            $.ajax({
+                url: '/auth/ajax/validate_voucher_code/',
+                type: 'POST',
+                dataType: 'json',
+                data: {'vcode': promoNum, '_xsrf': getCookie('_xsrf')},
+                success: function(data){
+                    if (data.msg == ''){
+                        $promoNum.attr('disabled', true);
+                        var txt = '';
+                        if (settings.month_count == 12 && data.use_scope.value == 'super_account_month'){
+                            txt = '姝や紭鎯犵爜浠呯敤浜庤喘涔板寘鏈�';
+                        }else if (settings.month_count != 12 && data.use_scope.value == 'super_account_year'){
+                            txt = '姝や紭鎯犵爜浠呯敤浜庤喘涔板寘骞�';
+                        }else{
+                            txt = '浼樻儬鐮佹纭紝鍙姷鎵�'+data.c_value+'鍏�';
+                            $clues.addClass('colBlur').html(txt);
+                            sessionStorage.senior_user_promo = JSON.stringify(data);
+                            init_discount(settings.month_count, availableRmb, settings.c_type, settings.discount);
+                            return;
+                        }
+                        $clues.removeClass('colBlur').html(txt);
+                    }else{
+                        settings.promo = '';
+                        settings.promo_money = 0;
+                        $clues.removeClass('colBlur').html(data.msg);
+                    }
+                }
+            });
+        });
+
+        $seniorUserBox.on('mouseenter', '.ah', function() {
+            hover_tip($(this), '灏氭湭鍒版湡鐨勪粯璐瑰姛鑳�,鍙寜澶╂姷鎵ｉ儴鍒嗚垂鐢ㄣ€�<br/>涓句緥锛氭偍鍦�30澶╀箣鍓嶄拱浜嗕竴娆�599鍏冨寘骞村簲鐢紝<br/>姝ゆ椂鍗囩骇楂樼骇鐗堬紝鍙姷鎵ｉ噾棰濅负锛�599*(335/365)=549.77鍏�');
+        });
+
+        $seniorUserBox.on('change', '.amain .buy_time_length select', function() {
+            var expireTime;
+            var time_v = $(this).find('option:selected').val();
+            settings.calTypeId = $(this).find('option:selected').attr("oid");
+            super_account = JSON.parse($.ajax({
+                url: '/plugin/ajax/get_info_for_buy_super_account/?'+timestamp,
+                type: "POST",
+                data: {
+                    'month_count': time_v,
+                    '_xsrf': getCookie('_xsrf')
+                },
+                async: false
+            }).responseText);
+            if (settings.month_count == 12 || (settings.month_count != 12 && time_v == 12)){
+                $promoNum.val('').attr('disabled',true);
+                $promobt.addClass('failureBt');
+                $clues.text('').hide();
+                $promo.find('.ckbox').removeClass('active');
+                sessionStorage.senior_user_promo = false;
+            }
+            settings.month_count = time_v;
+            expireTime = get_expireTime(super_account, time_v);
+            $(".amain .expireTime .num_Warning").text(expireTime);
+            init_paid_select($discount_paid_select, currency_info, settings.month_count);
+            init_discount(settings.month_count, availableRmb, settings.c_type, settings.discount);
+        });
+
+        $seniorUserBox.on('change', '.amain .discount_paid select', function() {
+            var activeDiv = $(this).parents('div');
+            if (activeDiv.find('.ckbox').hasClass('active')){
+                settings.discount = $(this).find('option:selected').val();
+                settings.c_type = $(this).find('option:selected').attr("c_type");
+                settings.discount_id = $(this).find('option:selected').attr("oid");
+                init_discount(settings.month_count, availableRmb, settings.c_type, settings.discount);
+            }
+        });
+
+        init_paid_select($discount_paid_select, currency_info, settings.month_count);
+        init_discount(settings.month_count, availableRmb, settings.c_type, settings.discount);
+
+        $seniorUserBox.on('click', '.success_bt', function() {
+            var paymentV = parseFloat($seniorUserBox.find(".paymentV span").text());
+            var balanceV = parseFloat($aprice.find(".aBalance span").text());
+            if(paymentV > 0){
+                payment_Method.goPay({
+                    needPay: paymentV,
+                    leave_money: availableRmb,
+                    type: "seniorUser",
+                    btnOKFn:function(){
+                        payment_Method.markRemove();
+                        payment_Method.payConfirm({
+                            btnOKFn:function(){
+                                payment_Method.markRemove();
+                                var orderStatus;
+                                getOrderStatus(function(data){
+                                    orderStatus = JSON.parse(data).order_status;
+                                    if(orderStatus == 1){
+                                        // 璐拱鎴愬姛
+                                        seniorUser.saveBuy();
+                                        $('body').find('.paid_mark').remove();
+                                    }else{
+                                        payment_Method.payConfirm({payStatus:false});
+                                    }
+                                });
+                            },
+                            btnCancelFn:function(){
+                                payment_Method.markRemove();
+                            }
+                        });
+                    }
+                });
+            }else{
+                payment_Method.orderConfirm({
+                    payMoney: balanceV,
+                    leave_money: availableRmb,
+                    btnOKFn:function(){
+                        // 璐拱鎴愬姛
+                        seniorUser.saveBuy();
+                        $('body').find('.paid_mark').remove();
+                    }
+                });
+            }
+        });
+
+        seniorUser.remove = function() {
+            $seniorUserBox.remove();
+        };
+
+        seniorUser.saveBuy = function(){
+            $.ajax({
+                "url": "/plugin/ajax/consume/",
+                "type": "POST",
+                "dataType": "JSON",
+                "async": false,
+                "data": {
+                    'plugin_id': 'super_account',
+                    'cal_type_id': settings.calTypeId,
+                    'month_count': settings.month_count,
+                    'discount_id': settings.discount_id,
+                    'pay_order_id': seniorUser_order.pay_order_id,
+                    'pay_type': seniorUser_order.pay_type,
+                    'vcode': $promoNum.val(),
+                    '_xsrf': getCookie('_xsrf')
+                },
+                success: function(data) {
+                    $show_dialog.remove();
+                    if (!data.info) {
+                        seniorUser.submitComplete('', data.expire_time);
+                    } else {
+                        seniorUser.submitComplete('no', '');
+                    }
+                }
+            });
+        };
+
+        seniorUser.submitComplete = function(substatus, expire_time){
+            if (window.location.href.indexOf("/senior_user") != -1 && substatus === ""){
+                if ($(".select_on_trial ").length > 0){
+                    $(".select_on_trial ").attr("on_trial_type", "True");
+                }
+            }
+            var sub_settings = {
+                subImgurl:"/static/images/register/success_duigou.png",
+                sub1_txt: "鍗囩骇鎴愬姛!",
+                sub2_txt: "楂樼骇鐗堟湁鏁堟湡鑷筹細" + expire_time,
+                subBt_txt: "绔嬪嵆浣跨敤"
+            };
+            if (substatus == "no"){
+                sub_settings.subImgurl = "/static/images/register/fail_duigou.png";
+                sub_settings.sub1_txt = "鍗囩骇澶辫触";
+                sub_settings.sub2_txt = "璇风◢鍚庡啀璇�";
+                sub_settings.subBt_txt = "";
+            }
+
+            var subBt_txt_str = '';
+            if (sub_settings.subBt_txt){
+                subBt_txt_str = '<a href="javascript:;" class="subYesBT mt20 WJButton margin_no">' + sub_settings.subBt_txt +'</a>';
+            }
+
+            var confirm_str =
+                '<div class="show_submitC">' +
+                    '<h2 class="atitle">鏀粯鎻愮ず</h2>'+
+                    '<a class="aclose" href="javascript:;"></a>' +
+                    '<div class="amain">' +
+                        '<img src="'+ sub_settings.subImgurl +'" alt="" />' +
+                        '<p class="sub1">'+ sub_settings.sub1_txt +'</p>' +
+                        '<p class="sub2">'+ sub_settings.sub2_txt +'</p>' +
+                        subBt_txt_str +
+                    '</div>' +
+                '</div>';
+            $seniorUserBox.append(confirm_str);
+
+            $seniorUserBox.on("click",".show_submitC .subYesBT",function(){
+                if (window.location.href.indexOf("plugin/use_list") != -1){
+                    window.location.href = window.location.href;
+                }else{
+                    window.location.href = '/list';
+                }
+            });
+        };
+
+        function hover_tip(obj, txt) {
+            $('body').append('<p class="c_hover_tip_p">' + txt + '</p>');
+            $('.c_hover_tip_p').css({
+                'z-index': '99999999',
+                'left': obj.offset().left + obj.outerWidth() + 8,
+                'top': obj.offset().top + (obj.outerHeight() - 29) / 2
+            });
+            obj.on('mouseleave', function() {
+                $('.c_hover_tip_p').remove();
+            });
+        }
+
+        function update_fee_type(fee_list) {
+            for (var i=0;i<fee_list.length;i++){
+                if (fee_list[i].use_time == 365){
+                    annual_fee = fee_list[i];
+                }else if (fee_list[i].use_time == 30){
+                    monthly_fee = fee_list[i];
+                }
+            }
+        }
+
+        // 鏇存柊浼樻儬鍒稿垪琛�
+        function init_paid_select($buy_time_select, currency_info, buy_time){
+            var scope_type = 'year',
+                type_Company = {'2':'鎶�', '3':'鍏�'},
+                type_Company_v = {'2':10, '3':1},   // 鐢ㄤ簬鏄剧ず锛屾瘮濡備簲鎶樺埜鏄剧ず0.5*10鎶�
+                total_consumption = annual_fee.cost;
+            if ($buy_time_select.length>0){
+                $buy_time_select.find("option").not(".init_C").remove();
+                if (buy_time != 12){scope_type = 'month';total_consumption = monthly_fee.cost*buy_time;}
+                var enabledDiscount = [];
+                var add_num = 0;
+                for (var i = 0; i < currency_info.data.length; i++){
+                    if (!((currency_info.data[i].scope.indexOf('year') != -1 || currency_info.data[i].scope.indexOf('month') != -1) && currency_info.data[i].scope.indexOf(scope_type) == -1)){
+                        if (!currency_info.data[i].satisfy_value || (parseFloat(total_consumption) >= parseFloat(currency_info.data[i].satisfy_value))){
+                            enabledDiscount.push(currency_info.data[i]);
+                            add_num += 1;
+                        }
+                    }
+                }
+                var option_str = initEnabledDiscount(enabledDiscount, buy_time, type_Company, type_Company_v);
+                if (add_num == 0){
+                    $buy_time_select.find("option:eq(0)").attr("selected", true);
+                    $buy_time_select.find(".init_C").text("鏃犱紭鎯犲埜鍙敤");
+                }else{
+                    // $buy_time_select.find(".init_C").text("涓嶄娇鐢�");
+                    $buy_time_select.find(".init_C").remove();
+                    $buy_time_select.append(option_str);
+                    $buy_time_select.find("option:first").attr("selected", true);
+                }
+                settings.discount_id = $buy_time_select.find("option:selected").attr("oid");
+                settings.discount = $buy_time_select.find("option:selected").attr("value");
+                settings.c_type = $buy_time_select.find("option:selected").attr("c_type");
+            }
+        }
+
+        function initEnabledDiscount(enabledDiscount, buy_time, type_Company, type_Company_v) {
+            var sortBeforeArr = [],
+                price = 0;
+            // 鎺掑簭浼樻儬鍒革紝鎶婁紭鎯犲姏搴﹀ぇ灏忛『搴忔帓鍒�
+            if (buy_time >= 12) {
+                price = annual_fee.cost;
+            } else {
+                price = monthly_fee.cost * buy_time;
+            }
+            for (var i = 0; i < enabledDiscount.length; i++) {
+                var discountNum = 0;
+                if (enabledDiscount[i].c_type == 2) discountNum = (10 - enabledDiscount[i].value*10) * price/10;
+                else if (enabledDiscount[i].c_type == 3) discountNum = enabledDiscount[i].value;
+                sortBeforeArr.push({'data': enabledDiscount[i], 'discount': discountNum});
+            }
+            var sortAfterDiscount = sortEnabledDiscount(sortBeforeArr, 'discount');
+            var disCountArr = [];
+            for (var i = 0; i < sortAfterDiscount.length; i++) {
+                var option_str = '<option oid="' + sortAfterDiscount[i].oid + '" value="' + sortAfterDiscount[i].value + '" c_type="' + sortAfterDiscount[i].c_type + '">' + sortAfterDiscount[i].value * type_Company_v[sortAfterDiscount[i].c_type] + type_Company[sortAfterDiscount[i].c_type] + '浼樻儬鍒�</option>';
+                disCountArr.push(option_str);
+            }
+            return disCountArr.join();
+        }
+        // 鎺掑簭浼樻儬鍒革紝鎶婁紭鎯犲姏搴﹀ぇ灏忛『搴忔帓鍒�
+        function sortEnabledDiscount(sortBeforeArr, key) {
+            var result = [];
+            sortBeforeArr.sort(keysort(key, true));
+            for (var i = 0; i < sortBeforeArr.length; i++) {
+                result.push(sortBeforeArr[i].data);
+            }
+            return result;
+        }
+        // 鎸夌収瀵硅薄鏁扮粍key鍊兼帓搴�
+        function keysort(key, desc) {
+          return function(a, b) {
+            return desc ? ~~(a[key] < b[key]) : ~~(a[key] > b[key]);
+          };
+        }
+
+        function discount_info(currency_info) {
+            var discount_str = '';
+            var type_Company = {'2':'鎶�', '3':'鍏�'},
+                type_Company_v = {'2':10, '3':1};
+            if (currency_info.data.length > 0) {
+                discount_str = '<div class="discount_paid mt10"><span class="mTitle"><label class="ckbox active"><span></span>浼樻儬鍒革細</label></span><select class="">';
+                discount_str += '<option oid="" value="1" c_type="" class="init_C">涓嶄娇鐢�</option>';
+                for (var i = 0; i < currency_info.data.length; i++) {
+                    if (i === 0){
+                        tmp = '<option selected="selected" oid="' + currency_info.data[i].oid + '" value="' + currency_info.data[i].value + '" c_type="' + currency_info.data[i].c_type + '">' + currency_info.data[i].value * type_Company_v[currency_info.data[i].c_type] + type_Company[currency_info.data[i].c_type] + '浼樻儬鍒�</option>';
+                    }else{
+                        tmp = '<option oid="' + currency_info.data[i].oid + '" value="' + currency_info.data[i].value + '" c_type="' + currency_info.data[i].c_type + '">' + currency_info.data[i].value * type_Company_v[currency_info.data[i].c_type] + type_Company[currency_info.data[i].c_type] + '浼樻儬鍒�</option>';
+                    }
+                    discount_str += tmp;
+                }
+                discount_str += '</select></div>';
+            }
+
+            return discount_str;
+        }
+
+        //璐拱鏃堕暱
+        function buy_time_info(num_month, buy_name, super_account) {
+            var buy_time_list = [
+                ["1", "1涓湀"],
+                ["2", "2涓湀"],
+                ["3", "3涓湀"],
+                ["4", "4涓湀"],
+                ["5", "5涓湀"],
+                ["6", "6涓湀"],
+                ["7", "7涓湀"],
+                ["8", "8涓湀"],
+                ["9", "9涓湀"],
+                ["10", "10涓湀"],
+                ["11", "11涓湀"],
+                ["12", "1骞�"]
+            ];
+            var buy_time_str = '<div class="buy_time_length"><span class="mTitle">璐拱鏃堕暱锛�</span><select>';
+            var expireTime;
+            if (typeof(buy_name) != 'undefined') {
+                buy_time_str = '<div class="buy_time_length"><span class="mTitle">' + buy_name + '锛�</span><select class="">';
+            }
+            for (var i = 0; i < num_month; i++) {
+                buy_time_str += '<option oid='+ monthly_fee.oid +' value=' + buy_time_list[i][0] + '>' + buy_time_list[i][1] + '</option>';
+            }
+            buy_time_str += '<option oid='+ annual_fee.oid +' selected="selected" value="12">1骞�</option></select>';
+            expireTime = get_expireTime(super_account, settings.month_count);
+            buy_time_str += '<div class="expireTime">楂樼骇鐗堟埅姝㈡棩鏈燂細<span class="num_Warning">'+ expireTime +'</span></div>';
+            buy_time_str += '</div>';
+            settings.calTypeId = annual_fee.oid;
+            return buy_time_str;
+        }
+
+        function get_expireTime(super_account, month){
+            var expireTime;
+            var D = new Date();
+            if (super_account.exprie_status == 1){
+                D = new Date(super_account.expire_time);
+            }
+            D.setMonth(D.getMonth() + parseInt(month));
+            expireTime = D.getFullYear() + "-" + (D.getMonth()+1) + "-" + D.getDate();
+            return expireTime;
+        }
+
+        function init_discount(time_num, availableRmb, c_type, discount) {
+            //楂樼骇鐗堣垂鐢�
+            var price_V = annual_fee.cost;
+            if (time_num != 12){
+                price_V = monthly_fee.cost * time_num;
+            }
+            //浼樻儬鍒�
+            var deductible_V = 0;   // 鎶垫墸浠锋牸锛屼紭鎯犱簡澶氬皯閽�
+            if (c_type && $(".discount_paid .mTitle .active").length>0){
+                if (c_type == 2){
+                    deductible_V = price_V - Number(price_V * discount).toFixed(2);
+                }else{
+                    deductible_V = discount;
+                }
+            }
+            // 浼樻儬鐮�
+            var promoV = 0;
+            if (sessionStorage.senior_user_promo && $seniorUserBox.find('.promo .ckbox').hasClass('active')){
+                var senior_user_promo = JSON.parse(sessionStorage.senior_user_promo);
+                if ((senior_user_promo.use_scope && senior_user_promo.use_scope.value) && (senior_user_promo.use_scope.value == 'super_account' || (senior_user_promo.use_scope.value == 'super_account_month' && time_num != 12) || (senior_user_promo.use_scope.value == 'super_account_year' && time_num == 12))){
+                    promoV = senior_user_promo.c_value;
+                }
+            }
+
+            //鎵ｉ櫎璐︽埛浣欓
+            var balance_V = parseFloat(price_V) - parseFloat(deductible_V) - parseFloat(super_account.money) - parseFloat(promoV);
+            //瀹為檯鏀粯璐圭敤
+            var payment_V = 0;
+            if (parseFloat(availableRmb) <= balance_V){
+                payment_V = balance_V - parseFloat(availableRmb);
+                balance_V = availableRmb;
+            }else{
+                if (parseFloat(balance_V) < 0){
+                    balance_V = 0;
+                }
+            }
+
+            var $aConsumption = $aprice.find(".aConsumption span");
+            var $aBalance = $aprice.find(".aBalance span");
+            var $aDeductible = $aprice.find(".aDeductible span");
+            var $aPromo = $aprice.find(".aPromo span");
+            var $aDeductibleHis = $aprice.find(".aDeductibleHis span");
+            var $paymentV = $aprice.find(".paymentV span");
+            $aConsumption.text(Number(price_V).toFixed(2));
+            $aDeductible.text(Number(deductible_V).toFixed(2));
+            $aPromo.text(Number(promoV).toFixed(2));
+            $aDeductibleHis.text(Number(super_account.money).toFixed(2));
+            //閽堝鑰佺敤鎴风殑澶勭悊锛屽綋鎶垫墸閲戦瀛樺湪鏃讹紝鎵嶄細鏄剧ず
+            $aDeductibleHis.text() > 0.00 ? $aDeductibleHis.parents('tr').css('display','table-row') : $aDeductibleHis.parents('tr').css('display','none');
+            $aBalance.text(Number(balance_V).toFixed(2));
+            $paymentV.text(Number(payment_V).toFixed(2));
+
+            settings.month_count = time_num;
+            settings.c_type = c_type;
+            settings.discount = discount;
+            (promoV == 0) ? $aPromo.parents("tr").find("p").addClass("failureFont") : $aPromo.parents("tr").find("p").removeClass("failureFont");
+            (balance_V == 0) ? $aBalance.parents("tr").find("p").addClass("failureFont") : $aBalance.parents("tr").find("p").removeClass("failureFont");
+            (deductible_V == 0) ? $aDeductible.parents("tr").find("p").addClass("failureFont") : $aDeductible.parents("tr").find("p").removeClass("failureFont");
+            (super_account.money == 0) ? $aDeductibleHis.parents("tr").find("p").addClass("failureFont") : $aDeductibleHis.parents("tr").find("p").removeClass("failureFont");
+        }
+    }
+};

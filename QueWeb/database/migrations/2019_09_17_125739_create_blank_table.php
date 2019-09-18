@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateBlankTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('blank', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('iphone')->unique();
-            $table->string('password');
-            $table->string('admin')->default(0);
-            $table->timestamps();
+            $table->string("testId");//对应哪一个题目
+            $table->string("content");//题目的答案
         });
     }
 
@@ -30,6 +27,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('blank');
     }
 }

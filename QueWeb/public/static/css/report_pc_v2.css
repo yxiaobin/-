@@ -1,0 +1,194 @@
+.table-row,
+.table-row ul {
+  margin-left: -30px;
+  margin-right: -30px;
+  padding: 0px 30px;
+  margin-top: -18px;
+  background: #F9F9F9;
+}
+
+.table-row ul {
+  padding-top: 12px;
+}
+
+.average-row,
+.input-box {
+  font-size: 14px;
+  color: #484848;
+  position: relative;
+}
+
+.average-row {
+  top: 16px;
+}
+
+.input-box {
+  top: 20px;
+}
+
+.average-row .btn-box {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 201;
+}
+
+.average-row .w-select-export {
+  width: 94px;
+  margin-left: 10px;
+}
+
+.average-row .w-select-export .w-select-input {
+  padding: 0 30px 0 12px;
+}
+
+.average-row .w-select .w-select-options-wrapper {
+  padding-right: 0px;
+}
+
+.input-box input {
+  top: 24px;
+}
+
+.input-box span {
+  vertical-align: middle
+}
+
+.input-box input {
+  margin: 0px 6px;
+  width: 60px;
+}
+
+.popup_wrap .popup_content {
+  border-bottom: none;
+}
+
+.distance-btn[status="disabled"],
+.distance-btn[status="disabled"]:hover {
+  color: #D8D8D8;
+}
+
+.input-box .w-input[disabled="disabled"],
+.input-box .w-input[disabled="disabled"]:hover
+.proportion-row .w-input[disabled="disabled"],
+.proportion-row .w-input[disabled="disabled"]:hover
+{
+  border-color: #D8D8D8;
+  color: #D8D8D8;
+  background: #fff;
+}
+
+.show-chart .select-chart,
+.show-chart .select-value {
+  width: 95px;
+  display: inline-block;
+}
+
+.show-chart .select-chart .w-select-input {
+  padding: 0 30px 0 12px;
+}
+
+.show-chart .select-value .w-select-input {
+  padding: 0 21px 0 12px;
+}
+
+.show-chart .select-chart .w-select-options-wrapper,
+.show-chart .select-value .w-select-options-wrapper {
+  padding-right: 0px;
+}
+
+.show-chart .select-chart {
+  margin-right: 6px;
+}
+.btn-box .w-select .w-select-input .w-select-input-txt.choose {
+  color: #707070;
+}
+.proportion-content {
+  min-height: 511px;
+}
+.proportion-primary-content .show-chart {
+  position: relative;
+  top: 32px;
+  border-top:1px solid #EAEAEA; 
+}
+
+.proportion-primary-content .show-chart .filter-row {
+  display: inline-block;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 18px 0px 28px 0px;
+  z-index: 201;
+}
+
+.proportion-primary-content .show-chart .chart-div,
+.proportion-primary-content .scatter-chart {
+  display: inline-block;
+  width: 542px;
+  height: 251px;
+  margin: 0 99px;
+}
+.proportion-primary-content .scatter-chart{
+  margin: 108px 99px;
+}
+.proportion-error {
+  font-size: 12px;
+  color: #FF6D56;
+  top: 19px;
+  position: relative;
+}
+.proportion-pop-error{
+  font-size: 12px;
+  color: #FF6D56;
+  margin-bottom: 20px;
+}
+.proportion-hide,.proportion-row .proportion-hide {
+  display: none;
+}
+.proportion-no-data {
+  position: absolute;
+  top: 200%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  color: #aaa
+}
+.proportion-pop .option-select{
+  width: 85px;
+}
+.proportion-row .proportion-row-select  .w-select-input{
+  padding: 0px 12px  0px 12px;
+  height: 26px;
+  line-height: 24px;
+}
+.proportion-pop-title{
+margin-bottom:18px; 
+}
+.proportion-row-title{
+  color: #707070;
+}
+.proportion-row .proportion-row-input{
+  width: 85px;
+  background: #fff;
+  padding: 4px 10px;
+}
+.proportion-row .proportion-row-sm-input{
+  width: 50px;
+  background: #fff;
+  padding: 4px 10px;
+}
+.proportion-row-sm{
+  font-size: 12px;
+  position: relative;
+  top: -1px;
+}
+.proportion-pop-content{
+  min-height: 382px;
+}
+.average-row .w-select-export .w-select-options-wrapper,.show-chart .filter-row .w-select .w-select-options-wrapper{
+  width: 94px;
+}
+.proportion-row-select .w-select-dom .w-select-options-wrapper{
+  width: 85px;
+  padding: 11px 0px 11px
+}

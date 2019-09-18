@@ -1,0 +1,179 @@
+/*鑰冭瘯璁剧疆寮圭獥鎸夐挳鏍峰紡*/
+.mask_content {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #484848;
+    overflow: hidden;
+    word-break: break-all;
+    margin-top: 24px;
+    margin-bottom: 70px;
+}
+
+.mask_cancle {
+    display: inline-block;
+    float: left;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #AAAAAA;
+    width: 192px !important;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border: none !important;
+    float: left !important;
+}
+
+.mask_save {
+    display: inline-block;
+    float: right;
+    background: #2672FF;
+    border-radius: 2px;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #FFFFFF;
+    width: 192px !important;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.popupCover,
+.popupComponent {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.popupCover {
+    background: #000;
+    opacity: 0.3;
+    *filter: alpha(opacity=30);
+    filter: alpha(opacity=30);
+    -moz-opacity: 0.3;
+}
+
+.jsbox {
+    border-collapse: collapse;
+    position: absolute;
+    z-index: 1300;
+    border-radius: 4px;
+    box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+.jsboxTitle {
+    color: #484848;
+    font-size: 18px;
+    height: 25px;
+    line-height: 25px;
+
+}
+
+.jsboxContent {
+    padding: 24px;
+    /* max-width:600px; */
+    min-width: 280px;
+    box-sizing: border-box;
+}
+.jsboxContent .loaddiv {
+    padding-top: 24px;
+}
+.jsbox_close, 
+.recycle_close,
+.option_close {
+    height: 18px;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    width: 18px;
+    text-align: center;
+    background: url(images_jsbox/jsbox_close.png) -3px -5px no-repeat;
+    cursor: pointer;
+}
+
+/* 纭妗嗗紑濮� */
+.tccCon_t {
+    font-size: 14px;
+    text-align: left;
+    color: #484848;
+    word-wrap: break-word;
+}
+.tccCon_a,
+.jsbox .jsboxContent .btn_wrap{
+    height: 36px;
+    line-height: 36px;
+    text-align: right;
+    margin-top: 24px;
+}
+.WJButton,
+.jsbox .jsboxContent .btn_wrap .btn_default {
+    border-radius: 2px;
+    cursor: pointer;
+    float: right;
+    font-size: 14px;
+    text-align: center;
+}
+
+.show_smallWrap .btn_wrap .btn_ok,
+.show_smallWrap .btn_wrap .btn_ok:hover,
+.show_smallWrap .btn_wrap .newWJButton,
+.WJButton.tcQz,
+.jsbox .jsboxContent .btn_wrap .btn_blue {
+    background-color: #2672ff;
+    color: #fff;
+    margin-left: 8px;
+    height: 36px;
+    line-height: 36px;
+    width: 96px;
+}
+
+.show_smallWrap .btn_wrap .btn_cancel,
+.show_smallWrap .btn_wrap .btn_cancel:hover,
+.WJButton.uniteC,
+.jsbox .jsboxContent .btn_wrap .btn_cancel {
+    height: 34px;
+    line-height: 34px;
+    width: 94px;
+    border: solid 1px #aaaaaa;
+    background-color: #ffffff;
+    color: #484848;
+}
+
+.show_smallWrap .btn_wrap .btn_ok,
+.show_smallWrap .btn_wrap .newWJButton,
+.show_smallWrap .btn_wrap .btn_cancel {
+    display: inline-block;
+    float: none;
+}
+
+.show_smallWrap .btn_wrap .newWJButton {
+    background-color: #aaaaaa;
+    padding: 0;
+    border-radius: 0;
+}
+
+/* 纭妗嗙粨鏉� */
+/* 鏂扮殑鎸夐挳鏍峰紡 */
+.WJButton.new_tcQz {
+    background-color: #2672ff;
+    color: #fff;
+    margin-left: 8px;
+    height: 36px;
+    line-height: 36px;
+    width: 96px;
+}
+
+/* 娴嬭瘎鍒嗗€间笉鍦ㄩ檺瀹氳寖鍥村唴鐨勬彁绀哄脊绐� start */
+#assess_score_overstep_popup .tccCon_t,
+#assess_score_overstep_popup .tccCon_a {
+    text-align: center;
+}
+
+#assess_score_overstep_popup .WJButton.tcQz {
+    float: none;
+    margin: 0 auto;
+}
+/* 娴嬭瘎鍒嗗€间笉鍦ㄩ檺瀹氳寖鍥村唴鐨勬彁绀哄脊绐� end */
