@@ -14,8 +14,6 @@
     <link href="{{asset("/static/css/common_pupop.css?v=5733414267218b9239fb8d45290e5324")}}" rel="stylesheet">
     <link href="{{asset("/static/css/report_pc_v2.css?v=8ccffb15d5f8eb1f3e2eabc6ce0d6a8e")}}" rel="stylesheet">
 
-
-
     <link href="{{asset("/static/component/css/wui.min.css?v=74298e5e2d65eca9d4d9f538aee2282c")}}" type="text/css" rel="stylesheet" />
     <link href="{{asset("/static/css/reset.css?v=7aac936b30990e7e47425f5c0a311e4e")}}" type="text/css" rel="stylesheet" />
     <!--图片裁剪-->
@@ -77,18 +75,23 @@
     <script type="text/javascript" src="{{asset("/static/js/base_utils.js?v=85e19fbb31a382a10e40969f283289ec")}}"></script>
     <!-- <script type="text/javascript" src="static/js/edit_v2/public.js?v=80831a11cc363f33dc17ac6e2c78ed64"></script> -->
     <!-- pc投票更改提示弹框插件 public.js=》 public_v2.js -->
-    <script type="text/javascript" src="static/js/edit_v2/new_question_tips_config.js?v=e7ef55c50c0d4efe68380aa1f2538fcd"></script>
-    <script type="text/javascript" src="static/js/edit_v2/public_v2.js?v=dc78810b50b4e18b11a921a93d55840e"></script>
-    <link rel="stylesheet" href="static/css/wjNotify.css?v=38c4fb94f1a78663fb75e70351e3a876">
+    <script type="text/javascript" src="{{asset("static/js/edit_v2/new_question_tips_config.js?v=e7ef55c50c0d4efe68380aa1f2538fcd")}}"></script>
+    <script type="text/javascript" src="{{asset("static/js/edit_v2/public_v2.js?v=dc78810b50b4e18b11a921a93d55840e")}}"></script>
+    <link rel="stylesheet" href="{{asset("/static/css/wjNotify.css?v=38c4fb94f1a78663fb75e70351e3a876")}}">
+
+    <link href="{{asset("layui/layui/css/layui.css")}}" rel="stylesheet">
+    <script type="text/javascript" src="{{asset("/layui/layui/layui.all.js")}}"></script>
+    <script type="text/javascript" src="{{asset("/layui/layui/layui.js")}}"></script>
+
 </head>
 <body>
 <div class="header_wrap">
 
-    <link rel="stylesheet" href="static/header/css/utils.css?v=6bbaf5d7ae331634cf4ee3db9a86406e">
-    <link rel="stylesheet" href="static/header/css/current_page.css?v=e1c8be427b3c04d5f9c7a2437e31767d">
-    <link rel="stylesheet" href="static/header/css/edit.css?v=457a5e0cc143605760b52674117c220f">
-    <script type="text/javascript" src="static/header/js/current_page/edit.js?v=1f0e78705271e225f5403325635a9042" defer="defer"></script>
-    <script type="text/javascript" src="static/header/js/utils.js?v=c94e41f834340ca7efb71ef894f4957b" defer="defer"></script>
+    <link rel="stylesheet" href="{{asset("static/header/css/utils.css?v=6bbaf5d7ae331634cf4ee3db9a86406e")}}">
+    <link rel="stylesheet" href="{{asset("/static/header/css/current_page.css?v=e1c8be427b3c04d5f9c7a2437e31767d")}}">
+    <link rel="stylesheet" href="{{asset("/static/header/css/edit.css?v=457a5e0cc143605760b52674117c220f")}}">
+    <script type="text/javascript" src="{{asset("/static/header/js/current_page/edit.js?v=1f0e78705271e225f5403325635a9042")}}" defer="defer"></script>
+    <script type="text/javascript" src="{{asset("/static/header/js/utils.js?v=c94e41f834340ca7efb71ef894f4957b")}}" defer="defer"></script>
 
     <div class="edit-header">
         <div class="edit-left">
@@ -100,69 +103,47 @@
             <div class="header-edit-title"></div>
         </div>
         <div class="edit-right">
-            <script type="text/javascript" defer="defer" src="static/js/plug-in/jsbox/jsConfirm.js?v=8f5140dd8bc79c3b106430842780877e"></script>
+            <script type="text/javascript" defer="defer" src="{{asset("/static/js/plug-in/jsbox/jsConfirm.js?v=8f5140dd8bc79c3b106430842780877e")}}"></script>
             <!-- <link rel="stylesheet" href="static/css/itemlist_base.css?v=2d4a57674bd123bdbab6d3c68fb960b2"> -->
-            <link rel="stylesheet" href="static/header/css/user_head.css?v=17d71d21e9b9b34016bdf2da447154b8">
+            <link rel="stylesheet" href="{{asset("/static/header/css/user_head.css?v=17d71d21e9b9b34016bdf2da447154b8")}}">
 
-            <script type="text/javascript" defer="defer" src="static/header/js/user_head.js?v=23019b3f0416bc068924d838a6bba4a7"></script>
+            <script type="text/javascript" defer="defer" src="{{asset("/static/header/js/user_head.js?v=23019b3f0416bc068924d838a6bba4a7")}}"></script>
 
             <div class="user-head ">
-                <a class="help" href="/helpcenter" wj-hawkeye="list_v2_nav_helpcenter" target="_blank">帮助</a>
-                <a href="/member" class="user-head-logo-div">
-                    <div class="user-head-logo center">
-                    </div>
-                </a>
+                {{--<a class="help" href="/helpcenter" wj-hawkeye="list_v2_nav_helpcenter" target="_blank">帮助</a>--}}
+                <img src="{{asset("/assets/images/profile.png")}}" class="user-head-logo-div" style="margin: auto;">
+                <div class="user-head-logo center">
+                    {{--<img src="{{asset("/assets/images/profile.png")}}" alt="">--}}
+                </div>
                 <div class="user-head-hover">
                     <div class="hax"></div>
                     <div class="user-head-hover-title" title="SoyBean683867...">
                         SoyBean683867...
-            </div>
-              <div class="user-head-hover-content">
+                    </div>
 
-                  <a href="/member" class="user-head-hover-content-item" wj-hawkeye="list_v1_user_member">
-                      <i class="user-head-icon user-head-icon-account"></i>
-                      <div class="user-head-hover-content-title">
-                          我的账户
-							</div>
-                  </a>
-                  <a class="user-head-hover-content-item" href="/member/mywallet" wj-hawkeye="list_v1_user_mywallet">
-                      <i class="user-head-icon user-head-icon-wallet"></i>
-                      <div class="user-head-hover-content-title" >
-                          我的钱包
-							</div>
-                  </a>
-                  <a href="/contact/list" class="user-head-hover-content-item" wj-hawkeye="list_v1_user_contact">
-                      <i class="user-head-icon user-head-icon-contact"></i>
-                      <div class="user-head-hover-content-title">联系人</div>
-                  </a>
-                  <a href="/message/list" class="user-head-hover-content-item msg" wj-hawkeye="list_v1_user_message">
-                      <i class="user-head-icon user-head-icon-msg"></i>
-                      <div class="user-head-hover-content-title">站内信</div>
-                  </a>
-              </div>
                     <div class="user-head-hover-exit">
-                        <div class="user-head-hover-exit-content">
+                        <br>
+                        <a>
                             <i class="user-head-icon user-head-icon-exit"></i>
-                            <div class="user-head-hover-exit-title" wj-hawkeye="list_v1_user_logout">退出登录</div>
-                        </div>
+                            <a style="color: #636b6f" href="{{url("logout")}}"><div class="user-head-hover-exit-title">退出登录</div></a>
                     </div>
                 </div>
             </div>
-            <div class="edit-right-left">
+           {{-- <div class="edit-right-left">
                 <a class="btn_preview" id="btn_preview"><div class="edit-right-preview">
                         预览
 					</div>
                 </a>
-                <div class="hide_btn release_share edit-right-publishe-share" wj-hawkeye="edit_v2_header_publish_btn1">
+                <div   class="hide_btn release_share edit-right-publishe-share" wj-hawkeye="edit_v2_header_publish_btn1">
                     发布并分享
 				</div>
                 <a href="/helpcenter" class="edit-right-help" target="_blank">
                     帮助
 				</a>
-            </div>
+            </div>--}}
         </div>
-        <div class="edit-center" pid="5d7e238192beb543b9d5984b" p-type="None">
-            <a  href="{{url("/questionlist")}}">
+        <div class="edit-center" p-type="None">
+            <a  href="">
                 <div class="edit-center-title">
                     <div id="edit-header-edit" >问卷列表</div>
                 </div>
@@ -173,39 +154,18 @@
                     <div id="edit-header-publish" class="showUnderLine">发布项目</div>
                 </div>
             </a>
-            {{--<div class="header-edit-icon arrow-left"></div>
-            <a permission-type="report" href="/report/basic_chart/5d7e238192beb543b9d5984b?pid=5d7e238192beb543b9d5984b">
-                <div class="edit-center-title">
-                    <div id="edit-header-report">统计报表</div>
-                </div>
-            </a>--}}
+
         </div>
     </div>
 </div>
-<!-- 问卷结束后的提示框 -->
-            <div class="question_end_popup hide_tip">
-                <div class="box">
-                    <div class="title">
-                        提示
-		</div>
-                    <div class="tip_content">
-                        该项目已结束，请重新发布后再进入编辑。
-		</div>
-                    <div class="foot">
-                        <span class="determine">确定</span>
-                    </div>
-                </div>
-            </div>
+
 <div class="main">
     <div class="edit_left_nav">
         <ul class="left_nav">
 
             <li class="edit hdgc_False" >
                 <a href="#">
-                    <div class="wihte_icon">
-                        <i>❤</i>
-                    </div>
-                    新建问卷
+
                 </a>
             </li>
         </ul>
@@ -239,7 +199,7 @@
                     </dl>
                 </div>
                 <div id="preview_img_btn">
-                    <span>选择你所需要的题目类型</span>
+                    <spanl>选择你所需要的题目类型</spanl>
                     {{--<label class="btn_switch checked" data-key="question_preview" data-value="on"></label>--}}
                 </div>
             </div>
@@ -268,15 +228,19 @@
             </div>
             <div class="survey_question_wrap">
                 <div >
+                    <div id="waitGif"  style= "position: fixed;left: 50% ; top:55% ;z-index: 99999999;width: 50px;height: 50px;">
+                        <img src="{{asset("/fash.gif")}}" alt="" style="width: 40px; height: 40px;"/>
+                        <br>
+                        <p style="font-size: smaller;color: #6c757d;">loading...</p>
+                    </div>
                     <div id="question_box" class="ui-sortable">
                         <!-- 题目的html放这里 -->
-
                     </div>
 
                 </div>
+
               </div>
                 <div class="survey_suffix_wrap">
-
                     <div class="survey_suffix">
                         <div class="content_editable" style="position: relative" >
                             <div class="suffix_content" edit-type="end_desc" contenteditable="true"  tabindex="0" placeholder="点击编辑结束语">
@@ -285,7 +249,7 @@
                         </div>
                     </div>
                     <div class="release_share_box">
-                        <button class="release_share_btn" wj-hawkeye="edit_v2_publish_btn2">发布并分享</button>
+                        <button id="question_finish" name="{{session("questionnaireId")}}" class="release_share_btn" wj-hawkeye="edit_v2_publish_btn2">发布并分享</button>
                     </div>
                     <div class="one_page_one_question">
                         感谢您的使用
@@ -295,6 +259,7 @@
         </div>
     </div>
     <div class="setting_main_wrap" id="setting_main_wrap"></div>
+
             <!-- ckeditor -->
    {{-- <script type="text/javascript" src="static/js/plug-in/ckeditor_4/ckeditor.js?v=27741b72307ba1a1e004921328a93d07"></script>--}}
  {{--   <script src="static/js/juicer.js?v=eddf2482fed75dc11f602a5f519435cb"></script>--}}
@@ -312,6 +277,8 @@
     {{--<script src="static/build/js/edit_main.js?v=72f49446abea0ac07c9d7f1b35eab0fc">
     </script>--}}
     <script src="static/js/third_party_stat.js?v=8f1accbc0cc40406d38648dfe454fb47"></script>
+    <script src="{{asset("/clipboard/dist/clipboard.js")}}"></script>
+
     {{--//定时加载函数--}}
     <script type="text/javascript">
         var num = 0;
@@ -322,6 +289,11 @@
                     _token:'{{csrf_token()}}'
                 },
                 function (data) {
+                    if(data.length==0)
+                    {
+                        flash();
+                        gifhide();
+                    }
                     if(num != data.length){
                         addDiv(data);
                         num = data.length;
@@ -330,6 +302,16 @@
                     }
                 });
         },1000);
+        function atload() {
+                var  uri = "/WorkOnline/QueWeb/public/search_test";
+                $.post(uri,
+                    {
+                        _token:'{{csrf_token()}}'
+                    },
+                    function (data) {
+                            addDiv(data);
+                    });
+            }
         function addDiv(data) {
             var code = "";
             for(i=0;i<data.length;i++)
@@ -359,7 +341,7 @@
                         "                                        <div class=\"q_seq\">"+ seq +  "</div>\n" +
                         "                                        <div style='display: inline'>\n" +
                         "                                            <input  id=\" "  + tag+"-"+id +   "  \" class=\"q_title \" edit-type=\"question\" tabindex=\"0\" style=\"border: 0px; width: 75%; float: left; \" value=\"   "+ content + "    \"> " +
-                        "                                           <span style='float: right'> 删除</spam> \n" +
+                        "                                           <span id='shanchutiankong-"+ id+ " ' style='float: right'> 删除</spam> \n" +
                         "                                        </div><br><br>\n" +
                         "                                    </div>\n" +
                         "\n" +
@@ -384,7 +366,7 @@
                         "                                          <div class=\"q_title_wrap\">\n" +
                         "                                              <div class=\"q_seq\">"+ seq + type +"</div>\n" +
                         "                                              <div >\n" +
-                        "                                                  <input id=\" "+ tag+"-"+id+ "  \" class=\"q_title \" style=\"border: 0px; width: 75%;\" value=\"  "+ content+ " \">  <span style='float: right'> 删除</spam>  \n" +
+                        "                                                  <input id=\" "+ tag+"-"+id+ "  \" class=\"q_title \" style=\"border: 0px; width: 75%;\" value=\"  "+ content+ " \">  <span id='shanchuxuanze-" + id +" ' style='float: right'> 删除</spam>  \n" +
                         "                                              </div>\n" +
                         "                                          </div>\n" +
                         "                                             <!-- 选项框 -->\n" +
@@ -406,6 +388,7 @@
             {
                 addChoice(data[i].id);
             }
+            gifhide();
 
         }
        function  flash() {
@@ -422,6 +405,7 @@
                //加载数据修改
                setTimeout(function () {
                    if (flag) {
+                       gifshow()
                        //console.log($(_this).val());
                        //发送数据信息
                        var kind = $(_this).attr('id').split('-')[0];
@@ -435,6 +419,7 @@
                            uri = "/WorkOnline/QueWeb/public/update_test";
                        }
                        var val = $(_this).val();
+                       console.log(uri)
                        $.post(uri,
                            {
                                content: val,
@@ -443,14 +428,17 @@
                                _token: '{{csrf_token()}}'
                            },
                            function (data) {
+
                               if(kind =="setTitle")
                               {
                                  console.log(data);
+
                                   $("#setTitle-001").val(data);
                               }
+                              gifhide()
                            });
                    }
-               }, 0)
+               }, 1000)
            })
            var flag1 = 0;
            $('input').focus(function () {
@@ -508,7 +496,7 @@
 
                             "\t\t\t\t\t\n" +
 
-                            "\t\t\t\t\t<span>删除</span> \n" +
+                            "\t\t\t\t\t<span id='shanchu-"+ data[j].id+" '>删除</span> \n" +
                             "\t\t\t\t</div>\n" +
                             "\t\t</li>"
 
@@ -521,11 +509,13 @@
                     $("#"+target).html(str_choice);
 
                     flash();
+
                 });
 
         }
 
-            $("body").delegate("p","click", function () {
+        $("body").delegate("p","click", function () {
+            gifshow()
                 var _this = this;
                 var str = $(_this).attr('id').split('-');
                 if (str.length > 0) {
@@ -539,10 +529,42 @@
                         function (data) {
                             //console.log("xuanxiangbiao:" + data);
                             addChoice(id);
+                            gifhide()
                         });
                 }
         })
-
+        $("body").delegate("span",'click',function () {
+           if(confirm("确定要删除吗")){
+                gifshow()
+               var _this = this;
+               var kind = $(_this).attr('id').split('-')[0];
+               var id = $(_this).attr('id').split('-')[1];
+                var  isload = 0;
+               var  uri="";
+               if(kind == "shanchuxuanze"|| kind =="shanchutiankong")
+               {
+                   uri = "/WorkOnline/QueWeb/public/delete_test";
+                   console.log("这里删除test表"+ id);
+               }else{
+                   uri = "/WorkOnline/QueWeb/public/delete_choice";
+                   console.log("这里删除choice表"+ id);
+                    isload = 1;
+               }
+               $.post(uri,
+                   {
+                       type: kind,
+                       id:id,
+                       _token: '{{csrf_token()}}'
+                   },function (data) {
+                       console.log(data)
+                       gifhide()
+                   })
+            if(isload==1)
+            {
+                atload();
+            }
+           }
+        })
 
 
     </script>;
@@ -550,6 +572,7 @@
     <script type="text/javascript">
         //生成对应的页面代码
         $("#tiankong").on("click",function () {
+            gifshow()
                 //后台添加记录
                     var  tag = "tiankong";
                     var  uri = "/WorkOnline/QueWeb/public/insert_test";
@@ -565,7 +588,9 @@
     </script>
     {{--点击单选按钮监听--}}
     <script type="text/javascript">
+
         $("#danxuan").on("click",function () {
+            gifshow()
             //后台添加记录
             var  tag = "danxuan";
             var  uri = "/WorkOnline/QueWeb/public/insert_test";
@@ -583,6 +608,7 @@
     {{--点击多选按钮监听--}}
     <script type="text/javascript">
         $("#duoxuan").on("click",function () {
+            gifshow()
             var  tag = "duoxuan";
             var  uri = "/WorkOnline/QueWeb/public/insert_test";
             $.post(uri,
@@ -594,6 +620,55 @@
                     //console.log(data);
                 });
         })
+    </script>
+    <script type="text/javascript">
+        function gifshow()
+        {
+            $("#waitGif").removeClass('hidden');
+        }
+        function gifhide(){
+            $("#waitGif").addClass('hidden');
+
+        }
+
+
+
+
+    </script>
+    {{--定义问卷超链接--}}
+    <script type="text/javascript">
+        $("#question_finish").on("click",function () {
+            gifshow();
+            var _this = this;
+            var id = $(_this).attr('name');
+            var  uri = "/WorkOnline/QueWeb/public/jiami_question";
+            $.post(uri,
+                {
+                    id:id,
+                    _token:'{{csrf_token()}}'
+                },
+                function (data) {
+                    //关闭加载
+                    gifhide();
+                    //打开模态框
+                    Finishshow(data);
+                });
+
+        })
+        function Finishshow(data) {
+            console.log(data);
+            var url="http://localhost/WorkOnline/QueWeb/public/answer_question/";
+            layer.open({
+                title: '发布成功'
+                ,content: "你的问卷的连接<br\>" + url + data + "<br/>快点复制链接去使用吧！"
+                ,yes: function(index, layero){
+                    //do something
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    window.location.href = '/WorkOnline/QueWeb/public/questionlist/';
+                }
+            });
+
+        }
     </script>
 
 </body>

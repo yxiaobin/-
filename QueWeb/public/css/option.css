@@ -1,0 +1,63 @@
+﻿.wholl{
+		background-color: white;
+		padding-top: 5%;
+        margin-top: 5%;
+		margin-left: 20%;
+		margin-right: 20%;
+		margin-bottom: 5%;
+		padding-bottom: 5%;
+	}
+	.front{
+		overflow: hidden;
+        text-align: center;
+	}
+	.center{
+		margin-top: 2%;
+		margin-left: 20%;
+		margin-right: 20%;
+		margin-bottom: 5%;
+	}
+	p{
+		font-size: 15px;
+		font-style: "楷体";
+	}
+	.next{
+		float:right;
+
+	}
+	.xuhao{
+		
+		margin-left: 17%;
+		margin-right: 74%;
+		padding-left: 1%;
+		font-size: 18px;
+		line-height: 25px;
+	}
+	.xuhao-left{
+		float: left;
+		font-size: 25px;
+		font-style:italic
+	}
+	.xuhao-right{
+		float:left;
+	}
+	.content-left{
+		font-weight: 700;
+		float:left;
+	}
+	.content-right{
+		float:left;
+		font-weight: 700;
+	}
+    .title{
+    	overflow: hidden;
+    }
+    .from{
+     float:right;
+     margin-right: 20%;
+    }
+    .textarea-inherit {
+        width: 100%;
+        overflow: auto;
+        word-break: break-all; //解决兼容问题
+    }

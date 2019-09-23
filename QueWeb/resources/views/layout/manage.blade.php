@@ -41,7 +41,7 @@
                 </li>
                 {{--问卷管理--}}
                 <li class="dropdown">
-                    <a href="#">
+                    <a href="">
                         <div class="icon">
                             <i class="fa fa-sliders" aria-hidden="true"></i>
                         </div>
@@ -49,26 +49,39 @@
                     </a>
                     <div class="dropdown-menu">
                         <ul>
-                            <li><a href="#">问卷列表</a></li>
-                            <li><a href="#">问卷审核</a></li>
+                            <li><a href="{{url("question_list_admin")}}">问卷违规管理</a></li>
+                            <li><a href="{{url("list_request_question")}}">问卷审核管理</a></li>
+
                         </ul>
                     </div>
                 </li>
                 {{--用户管理--}}
                 <li class="dropdown">
-                    <a href="#">
+                    <a href="{{url("/usermanager")}}">
                         <div class="icon">
                             <i class="fa fa-sliders" aria-hidden="true"></i>
                         </div>
                         <div class="title">用户管理</div>
                     </a>
+
+                </li>
+
+                {{--模板管理--}}
+                <li class="dropdown">
+                    <a href="">
+                        <div class="icon">
+                            <i class="fa fa-sliders" aria-hidden="true"></i>
+                        </div>
+                        <div class="title">模板管理</div>
+                    </a>
                     <div class="dropdown-menu">
                         <ul>
-                            <li><a href="#">幻灯片管理</a></li>
+                            <li><a href="{{url("/modal")}}">模板管理</a></li>
+                            <li><a href="{{url("/category")}}">分类管理</a></li>
+
                         </ul>
                     </div>
                 </li>
-
             </ul>
         </div>
     </aside>
@@ -117,14 +130,9 @@
                                     <h4 class="username">管理员您好</h4>
                                 </div>
                                 <ul class="action">
-                                    <li>
 
-                                        <a href="#">
-                                            信息修改
-                                        </a>
-                                    </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="{{url("/logout")}}">
                                             退出
                                         </a>
                                     </li>

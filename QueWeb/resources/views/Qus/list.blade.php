@@ -87,11 +87,47 @@
     <link rel="stylesheet" type="text/css" href="{{asset("/assets/css/theme/blue.css")}}">
     <link rel="stylesheet" type="text/css" href="{{asset("/assets/css/theme/red.css")}}">
     <link rel="stylesheet" type="text/css" href="{{asset("/assets/css/theme/yellow.css")}}">
+
+    <link href="{{asset("layui/layui/css/layui.css")}}" rel="stylesheet">
+    <script type="text/javascript" src="{{asset("/layui/layui/layui.all.js")}}"></script>
+    <script type="text/javascript" src="{{asset("/layui/layui/layui.js")}}"></script>
+
     <style type="text/css">
         th::after{
             content: "" !important;
         }
-    </style>
+        .container {
+             margin-left:880px;
+             height:30px;
+             padding-top:20px;
+             width: 1500px;
+             margin-top:10px;
+         }
+        .parent {
+            position: relative;
+        }
+        .search {
+            width: 300px;
+            height: 40px;
+            border-radius: 18px;
+            outline: none;
+            border: 1px solid #ccc;
+            padding-left: 20px;
+            position: absolute;
+        }
+        .btn-search {
+            height: 50px;
+            width: 50px;
+            position: absolute;
+            background: url("{{asset("/assets/images/profile.png")}}") ;
+            top: 6px;
+            left: 285px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        </style>
 </head>
 <body>
 <div class="header_wrap">
@@ -118,50 +154,34 @@
 
             <script type="text/javascript" defer="defer" src="static/header/js/user_head.js?v=23019b3f0416bc068924d838a6bba4a7"></script>
 
+
             <div class="user-head ">
-                <a class="help" href="/helpcenter" wj-hawkeye="list_v2_nav_helpcenter" target="_blank">帮助</a>
-                <a href="/member" class="user-head-logo-div">
+                {{--<a class="help" href="/helpcenter" wj-hawkeye="list_v2_nav_helpcenter" target="_blank">帮助</a>--}}
+
+                    <img src="{{asset("/assets/images/profile.png")}}" class="user-head-logo-div" style="margin: auto;">
                     <div class="user-head-logo center">
+                        {{--<img src="{{asset("/assets/images/profile.png")}}" alt="">--}}
                     </div>
-                </a>
+
                 <div class="user-head-hover">
                     <div class="hax"></div>
                     <div class="user-head-hover-title" title="SoyBean683867...">
-                        SoyBean683867...
+                        @php
+                            $user = \App\User::find(session("id"));
+                        @endphp
+                        {{$user->name}}
                     </div>
-                    <div class="user-head-hover-content">
 
-                        <a href="/member" class="user-head-hover-content-item" wj-hawkeye="list_v1_user_member">
-                            <i class="user-head-icon user-head-icon-account"></i>
-                            <div class="user-head-hover-content-title">
-                                我的账户
-                            </div>
-                        </a>
-                        <a class="user-head-hover-content-item" href="/member/mywallet" wj-hawkeye="list_v1_user_mywallet">
-                            <i class="user-head-icon user-head-icon-wallet"></i>
-                            <div class="user-head-hover-content-title" >
-                                我的钱包
-                            </div>
-                        </a>
-                        <a href="/contact/list" class="user-head-hover-content-item" wj-hawkeye="list_v1_user_contact">
-                            <i class="user-head-icon user-head-icon-contact"></i>
-                            <div class="user-head-hover-content-title">联系人</div>
-                        </a>
-                        <a href="/message/list" class="user-head-hover-content-item msg" wj-hawkeye="list_v1_user_message">
-                            <i class="user-head-icon user-head-icon-msg"></i>
-                            <div class="user-head-hover-content-title">站内信</div>
-                        </a>
-                    </div>
                     <div class="user-head-hover-exit">
-                        <div class="user-head-hover-exit-content">
+                        <br>
+                        <a>
                             <i class="user-head-icon user-head-icon-exit"></i>
-                            <div class="user-head-hover-exit-title" wj-hawkeye="list_v1_user_logout">退出登录</div>
-                        </div>
+                            <a style="color: #636b6f" href="{{url("logout")}}"><div class="user-head-hover-exit-title">退出登录</div></a>
                     </div>
                 </div>
             </div>
             <div class="edit-right-left">
-                <a class="btn_preview" id="btn_preview"><div class="edit-right-preview">
+             {{--   <a class="btn_preview" id="btn_preview"><div class="edit-right-preview">
                         预览
                     </div>
                 </a>
@@ -170,7 +190,7 @@
                 </div>
                 <a href="/helpcenter" class="edit-right-help" target="_blank">
                     帮助
-                </a>
+                </a>--}}
             </div>
         </div>
         <div class="edit-center" p-type="None">
@@ -185,34 +205,38 @@
                     <div id="edit-header-publish">发布项目</div>
                 </div>
             </a>
-
+            <div class="header-edit-icon arrow-left"></div>
+            <a  href="{{url("search_global_question")}}">
+                <div class="edit-center-title">
+                    <div id="edit-header-publish">问卷广场</div>
+                </div>
+            </a>
+            <div class="header-edit-icon arrow-left"></div>
+            <a  href="#">
+                <div class="edit-center-title">
+                    <div id="edit-header-publish">哼哼哈嘿</div>
+                </div>
+            </a>
         </div>
     </div>
 </div>
 
-<div class="main">
+<div class="main" style="margin: 0px 0px!important;">
 
-
-    <div class="survey_main_wrap">
-        <div id="preview-container">
-            <div class="preview-image">
-                <i class="triangle"></i>
-            </div>
-        </div>
         <div class="survey_main ">
             <div class="survey_prefix_wrap">
                 <div class="survey_title">
                     <div class="">
-                        <div class="title_content" edit-type="project" contenteditable="true" tabindex="0"><p style="text-align: left;">问卷列表</p>
+                        <div class="title_content" edit-type="project" contenteditable="false" tabindex="0"><p style="text-align: left;">问卷列表</p>
                         </div>
                     </div>
                 </div>
-                <div class="survey_prefix">
+               {{-- <div class="survey_prefix">
                     <div class="">
                         <div class="prefix_content" edit-type="begin_desc" contenteditable="false" tabindex="0"
                              placeholder="点击编辑欢迎语">亲爱的用户你好，这里是您已编辑的问卷</div>
                     </div>
-                </div>
+                </div>--}}
             </div>
             <div class="survey_question_wrap">
                 <div >
@@ -221,40 +245,173 @@
                             <div class="col-md-12 col-sm-12">
                                 <div class="card">
 
+                                    <div class="container">
+                                        <form action="" class="parent">
+                                            <input type="text" class="search" placeholder="输入对问卷名进行搜索">
+                                            <a><img src="{{asset("/assets/images/search.png")}}" height="30px" width="30px" style="margin-left:300px;margin-top: 5px;"/></a>
+
+
+                                        </form>
+                                    </div>
+
                                     <div class="card-body">
                                         <table class=" table">
                                             <thead>
                                             <th>问卷名称</th>
 
-                                            <th>结束时间</th>
+                                            <th>开始时间</th>
+                                            <th>超链接</th>
                                             <th>状态</th>
-
-                                            <th>查看详情</th>
+                                            <th>问卷广场</th>
+                                            <th>相关操作</th>
                                             </thead>
+
                                             <tbody>
+
+                                            @if(count($objs)==0)
+                                                <tr>
+
+
+                                                    <td>
+                                                        <span>您目前还没有创建过任何问卷，请您创建问卷后再来访问</span>
+                                                    </td>
+
+                                                </tr>
+                                            @endif
                                                 @foreach($objs as $obj)
                                                 <tr>
+
                                                     <td>
                                                       {{$obj->title}}
                                                     </td>
                                                     <td>
-                                                        {{$obj->endTime}}
+                                                        {{$obj->startTime}}
                                                     </td>
-                                                    <td>{{$obj->status}}</td>
-
                                                     <td>
-                                                        <a href="#" target="view_window" class="btn btn-primary btn-xs" role="button">
+                                                        <a>  <span style = "color: #636b6f" onclick="showLink(this)" name = "{{$obj->link}}">查看详情</span> </a>
+                                                       <script type="text/javascript">
+                                                           function showLink(this1) {
+                                                               var _this = this1;
+                                                               var url="http://localhost/WorkOnline/QueWeb/public/answer_question/";
+                                                               console.log(_this)
+                                                               var  link = $(_this).attr("name");
+                                                               layer.open({
+                                                                   title: '问卷连接'
+                                                                   ,content: "你的问卷的连接<br\>" + url + link + "<br/>快点复制链接去使用吧！"
+
+                                                               })
+                                                           }
+                                                       </script>
+                                                    </td>
+                                                    <td>
+                                                        @if($obj->status == 0)
+                                                            <p style="color: red ;"><strong>违规贴</strong></p>
+                                                        @endif
+                                                            @if($obj->status == 1)
+                                                            <strong style="color: #4cae4c">进行中</strong>
+                                                            @endif
+                                                            @if($obj->status == 2)
+                                                                 <strong style="color: blue"> 已完成 </strong>
+                                                            @endif
+                                                            @if($obj->status == -1)
+                                                                <p style="color: greenyellow"><strong>未发布</strong></p>
+                                                            @endif
+                                                       </td>
+                                                    <td>
+                                                        @if($obj->global == 1)
+                                                            <strong style="color: red">申请中</strong>
+                                                        @endif
+                                                            @if($obj->global == 0)
+                                                                <strong style="color: #4cae4c">未发布</strong>
+                                                            @endif
+                                                            @if($obj->global == 2)
+                                                                <strong style="color: green">已发布</strong>
+                                                            @endif
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{url("/view_question/$obj->link")}}" @if($obj->status==0 || $obj->status==-1)  disabled onclick="return false" @endif target="view_window" class="btn btn-success btn-xs" role="button">
                                                             预览
                                                         </a>
+                                                        <a href="{{url("/question_update/$obj->id")}}" @if($obj->status == 1) onclick="return confirm('您正在修改状态为进行中的问卷，点击确定后您的问卷将变为未发布且之前的统计数据将会无效，确定要修改吗？')" @endif target="view_window" class="btn btn-primary btn-xs" role="button">
+                                                            修改
+                                                        </a>
 
+                                                        <a href="{{url("/question_delete/$obj->id")}}">
+                                                            <input type="button" class="btn btn-xs btn-danger" onclick="return confirm('确定要删除？')" value="删除">
+                                                        </a>
+                                                        @if($obj->global != 2)
+                                                        <button id="request-{{$obj->id}}" onclick="request(this)" target="view_window" class="btn btn-primary btn-xs" role="button">
+                                                            发布到问卷广场
+                                                        </button>
+                                                        @endif
+                                                        @if($obj->global == 2)
+                                                            <a href="{{url("cancel_request_question/$obj->id")}}" target="view_window" class="btn btn-warning btn-xs" role="button">
+                                                                取消发布到问卷广场
+                                                            </a>
+                                                        @endif
+                                                        <script type="text/javascript">
+                                                            function request(a){
+                                                                var _this = a;
+                                                                console.log(_this)
+                                                                var  link = $(_this).attr("id").split("-")[1];
+
+                                                                var  uri = "/WorkOnline/QueWeb/public/request_question";
+                                                                $.post(uri,
+                                                                    {
+                                                                        _token:'{{csrf_token()}}',
+                                                                        id:link
+                                                                    },
+                                                                    function (data) {
+                                                                        layer.open({
+                                                                            title: '信息提示'
+                                                                            ,content: "您好您的审核已经发出，请耐心等待！"
+                                                                        })
+                                                                    });
+                                                            }
+                                                        </script>
+
+                                                        <a href="{{url("/analysis_question/$obj->link")}}" @if($obj->status==0 || $obj->status==-1) disabled onclick="return false"  @endif target="view_window" class="btn btn-warning btn-xs" role="button">
+                                                            数据分析
+                                                        </a>
+                                                        @if($obj->status==2)
+                                                        <button target="view_window" id="jixushouji-{{$obj->id}}" onclick="continue_question(this)" class="btn btn-primary btn-xs" role="button">
+                                                            继续收集
+                                                        </button>
+                                                            <script type="text/javascript">
+                                                                function continue_question(a){
+                                                                    var _this = a;
+                                                                    console.log(_this)
+                                                                    var  link = $(_this).attr("id").split("-")[1];
+
+                                                                    var  uri = "/WorkOnline/QueWeb/public/continue_question";
+                                                                    $.post(uri,
+                                                                        {
+                                                                            _token:'{{csrf_token()}}',
+                                                                            id:link
+                                                                        },
+                                                                        function (data) {
+                                                                            layer.open({
+                                                                                title: '信息提示'
+                                                                                ,content: "操作成功！开始数据收集。"
+                                                                            })
+                                                                        });
+                                                                }
+                                                            </script>
+
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </table>
                                     </div>
-
+                                    <div class="card-header">
+                                        <a href="{{url("question_new")}}">
+                                            <input type="button" class="btn btn-primary" value="新建问卷">
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
 
                     </div>
@@ -270,7 +427,7 @@
                 </div>
             </div>
         </div>
-    </div>
+
 
 
 
